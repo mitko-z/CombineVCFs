@@ -1,5 +1,7 @@
 #pragma once
 #include "BaseMenu.h"
+#include "SelectDirectoryMenu.h"
+#include "RangeMenu.h"
 #include <string> // +operator overload
 
 

@@ -24,5 +24,5 @@ protected:
 
 	void pressAnyKey();
 
-	int getChoice();
+	int getChoice(int upperRange);
 };

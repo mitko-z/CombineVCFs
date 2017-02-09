@@ -25,7 +25,12 @@ void BaseMenu::pressAnyKey()
 }
 
 
-int BaseMenu::getChoice()
+/// acquires no error causing user input of integer values 
+/// for the purpose of choice selection in a menu. The method 
+/// assumes that the value for exit is 0 and returns it if
+/// the user input is not in the range between 0
+/// and upperRange (if this parameter is set)
+int BaseMenu::getChoice(int upperRange=0)
 {
 	std::string choiceAsString;
 	std::getline(std::cin, choiceAsString);
@@ -40,5 +45,12 @@ int BaseMenu::getChoice()
 	if (choiceAsString.size() == 0)
 		return 0;
 
-	return stoi(choiceAsString);
+	int choice = stoi(choiceAsString);
+
+	if (choice < 0)
+		return 0;
+	if (upperRange > 0 && choice > upperRange)
+		return 0;
+
+	return choice;
 }
