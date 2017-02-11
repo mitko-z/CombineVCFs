@@ -9,7 +9,7 @@ SelectDirectoryMenu::SelectDirectoryMenu()
 		std::cout << "Error: " << result << "\n";
 	else
 		currentDirectory = my_documents;*/
-	currentDirectory = L"C:\\";
+	m_wsCurrentDirectory = L"C:\\";
 }
 
 int CALLBACK SelectDirectoryMenu::BrowseCallbackProc(HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData)
@@ -61,11 +61,15 @@ std::wstring SelectDirectoryMenu::BrowseFolder(std::wstring saved_path)
 
 std::string SelectDirectoryMenu::getCurrentDirectory()
 {
-	std::string result = std::string(currentDirectory.begin(), currentDirectory.end());
-	return result;
+	return std::string(m_wsCurrentDirectory.begin(), m_wsCurrentDirectory.end());
+}
+
+std::wstring SelectDirectoryMenu::wGetCurrentDirectory()
+{
+	return m_wsCurrentDirectory;
 }
 
 void SelectDirectoryMenu::processMenu()
 {
-	currentDirectory = BrowseFolder(currentDirectory);
+	m_wsCurrentDirectory = BrowseFolder(m_wsCurrentDirectory);
 }

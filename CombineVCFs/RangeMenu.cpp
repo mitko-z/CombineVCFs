@@ -38,7 +38,7 @@ void RangeMenu::processMenu()
 		{
 			m_iLowerRange = a;
 			m_iUpperRange = b;
-			return;
+			return; // berak;
 		}
 		else
 		{

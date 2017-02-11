@@ -11,7 +11,7 @@
 class SelectDirectoryMenu
 {
 private:
-	std::wstring currentDirectory;
+	std::wstring m_wsCurrentDirectory;
 
 	std::wstring BrowseFolder(std::wstring saved_path);
 public:
@@ -21,6 +21,8 @@ public:
 	void processMenu();
 
 	std::string getCurrentDirectory();
+
+	std::wstring wGetCurrentDirectory();
 
 	static int CALLBACK BrowseCallbackProc(HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData);
 

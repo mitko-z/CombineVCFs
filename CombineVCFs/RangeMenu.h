@@ -10,7 +10,7 @@ private:
 	unsigned int m_iLowerRange;
 	unsigned int m_iUpperRange;
 public:
-	// to do: make the constructo to get automatically the range from the current folder
+	// to do: make the constructor to get automatically the range from the current folder
 	RangeMenu() :m_iLowerRange(1), m_iUpperRange(1) {}
 
 	std::string getRange();

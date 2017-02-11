@@ -2,6 +2,7 @@
 #include "BaseMenu.h"
 #include "SelectDirectoryMenu.h"
 #include "RangeMenu.h"
+#include "OutputFileMenu.h"
 #include <string> // +operator overload
 
 
@@ -14,5 +15,5 @@ public:
 
 	void processMenu();
 private:
-	const std::string NOT_AVAIL_TEXT = "(Not available at this moment...)";
+	const std::string NOT_AVAIL_TEXT = "(UNDER CONSTRUCTION. Please be patient!)";
 };

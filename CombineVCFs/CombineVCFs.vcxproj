@@ -144,12 +144,14 @@
   <ItemGroup>
     <ClCompile Include="BaseMenu.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="OutputFileMenu.cpp" />
     <ClCompile Include="RangeMenu.cpp" />
     <ClCompile Include="SelectDirectoryMenu.cpp" />
     <ClCompile Include="StartMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseMenu.h" />
+    <ClInclude Include="OutputFileMenu.h" />
     <ClInclude Include="RangeMenu.h" />
     <ClInclude Include="SelectDirectoryMenu.h" />
     <ClInclude Include="StartMenu.h" />
