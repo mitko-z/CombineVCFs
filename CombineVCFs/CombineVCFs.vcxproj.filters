@@ -33,6 +33,9 @@
     <ClCompile Include="OutputFileMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VCFRecord.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseMenu.h">
@@ -48,6 +51,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OutputFileMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessVCFs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VCFRecord.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -148,13 +148,16 @@
     <ClCompile Include="RangeMenu.cpp" />
     <ClCompile Include="SelectDirectoryMenu.cpp" />
     <ClCompile Include="StartMenu.cpp" />
+    <ClCompile Include="VCFRecord.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseMenu.h" />
     <ClInclude Include="OutputFileMenu.h" />
+    <ClInclude Include="ProcessVCFs.h" />
     <ClInclude Include="RangeMenu.h" />
     <ClInclude Include="SelectDirectoryMenu.h" />
     <ClInclude Include="StartMenu.h" />
+    <ClInclude Include="VCFRecord.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
