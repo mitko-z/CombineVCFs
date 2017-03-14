@@ -145,6 +145,7 @@
     <ClCompile Include="BaseMenu.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OutputFileMenu.cpp" />
+    <ClCompile Include="ProcessVCFs.cpp" />
     <ClCompile Include="RangeMenu.cpp" />
     <ClCompile Include="SelectDirectoryMenu.cpp" />
     <ClCompile Include="StartMenu.cpp" />

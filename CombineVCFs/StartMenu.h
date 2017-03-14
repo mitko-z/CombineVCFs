@@ -3,6 +3,7 @@
 #include "SelectDirectoryMenu.h"
 #include "RangeMenu.h"
 #include "OutputFileMenu.h"
+#include "ProcessVCFs.h"
 #include <string> // +operator overload
 
 

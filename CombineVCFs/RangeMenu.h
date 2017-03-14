@@ -17,6 +17,6 @@ public:
 
 	void processMenu();
 
-	int getLower() { return m_iLowerRange; }
-	int getUpper() { return m_iUpperRange; }
+	unsigned int getLower() { return m_iLowerRange; }
+	unsigned int getUpper() { return m_iUpperRange; }
 };

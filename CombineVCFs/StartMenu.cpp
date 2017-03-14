@@ -32,6 +32,16 @@ void StartMenu::processMenu()
 		case 3:
 			outputFileMenu.processMenu();
 			break;
+		case 4:
+			ProcessVCFs processVCFs
+				(
+					selectDirectory.wGetCurrentDirectory(),
+					rangeMenu.getLower(),
+					rangeMenu.getUpper(), 
+					outputFileMenu.wGetCurrentFileName()
+				);
+			processVCFs.processIt();
+			break;
 		}
 	}
 	while (choice != 0);
