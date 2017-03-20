@@ -35,11 +35,23 @@ public:
 
 	bool operator==(VCFRecord recordToCompareWith);
 
+	bool isSimilarTo(VCFRecord recordToCompareWith);
+
+	void mergeData(VCFRecord recordToAdd);
+
 private:
 	void printField(std::wstring phrase, wstring field);
 
 	void printField(std::wstring phrase, vector<pair<wstring, int>> field);
 
 	void printField(std::wstring phrase, vector<pair<wstring, wstring>> field);
+
+	bool areVectorsEqual(vector<pair<wstring, wstring>> vector1, vector<pair<wstring, wstring>> vector2);
+
+	bool areVectorsSimilar(vector<pair<wstring, wstring>> vector1, vector<pair<wstring, wstring>> vector2);
+
+	void addDataIfDontExist(std::wstring &field, std::wstring dataToAdd);
+
+	void addDataIfDontExist(vector<pair<wstring, wstring>> &vectorField, vector<pair<wstring, wstring>> vectorToAddFrom);
 };
 

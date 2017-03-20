@@ -1,5 +1,6 @@
 #pragma once
 #include "VCFRecord.h"
+#include "SimilarRecordsMenu.h"
 #include <string>
 #include <vector>
 #include <iostream>

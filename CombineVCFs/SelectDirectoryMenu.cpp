@@ -9,7 +9,7 @@ SelectDirectoryMenu::SelectDirectoryMenu()
 		std::cout << "Error: " << result << "\n";
 	else
 		currentDirectory = my_documents;*/
-	m_wsCurrentDirectory = L"C:\\";
+	m_wsCurrentDirectory = L"E:\\docs\\contacts"; 
 }
 
 int CALLBACK SelectDirectoryMenu::BrowseCallbackProc(HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData)

@@ -39,6 +39,9 @@
     <ClCompile Include="ProcessVCFs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SimilarRecordsMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseMenu.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VCFRecord.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimilarRecordsMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

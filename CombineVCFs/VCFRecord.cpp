@@ -62,10 +62,9 @@ void VCFRecord::insertData(wstring fieldCriteria, wstring value, wstring type)
 
 void VCFRecord::print()
 {
-	
-	
+
 	printField(L"Title", title);
-	printField(L"Name", n);
+	//printField(L"Name", n);    // <-- this field has the same data as fn - no need to print
 	printField(L"Family Name", fn);
 	printField(L"Phone", phones);
 	printField(L"E-mail", emails);
@@ -125,54 +124,135 @@ bool VCFRecord::operator==(VCFRecord recordToCompareWith)
 		return false;
 	if (this->bday != recordToCompareWith.bday)
 		return false;
-	if (this->phones.size() != recordToCompareWith.phones.size())
+	if (!areVectorsEqual(this->phones, recordToCompareWith.phones))
+		return false;
+	if (!areVectorsEqual(this->emails, recordToCompareWith.emails))
+		return false;
+	if (!areVectorsEqual(this->addresses, recordToCompareWith.addresses))
+		return false;
+	
+
+	return true;
+}
+
+bool VCFRecord::areVectorsEqual
+		(
+			vector<pair<wstring, wstring>> vector1, 
+			vector<pair<wstring, wstring>> vector2
+		)
+{
+	if (vector1.size() != vector2.size())
 	{
 		return false;
 	}
 	else
 	{
-		for (int i = 0; i < this->phones.size(); i++)
+		for (int i = 0; i < vector1.size(); i++)
 		{
-			if 
+			if
 				(
-					this->phones[i].first != recordToCompareWith.phones[i].first || 
-					this->phones[i].second != recordToCompareWith.phones[i].second
+					vector1[i].first != vector2[i].first ||
+					vector1[i].second != vector2[i].second
 				)
 				return false;
 		}
 	}
-	if (this->emails.size() != recordToCompareWith.emails.size())
-	{
-		return false;
-	}
-	else
-	{
-		for (int i = 0; i < this->emails.size(); i++)
-		{
-			if
+}
+
+bool VCFRecord::isSimilarTo(VCFRecord recordToCompareWith)
+{
+	if (this->fn != L"" && this->fn == recordToCompareWith.fn)
+		return true;
+	if (this->note != L"" && this->note == recordToCompareWith.note)
+		return true;
+	if (this->url != L"" && this->url == recordToCompareWith.url)
+		return true;
+	if (this->org != L"" && this->org == recordToCompareWith.org)
+		return true;
+	if (this->title != L"" && this->title == recordToCompareWith.title)
+		return true;
+	if (this->xSkypeUsername != L"" && this->xSkypeUsername == recordToCompareWith.xSkypeUsername)
+		return true;
+	if (this->bday != L"" && this->bday == recordToCompareWith.bday)
+		return true;
+	if (areVectorsSimilar(this->phones, recordToCompareWith.phones))
+		return true;
+	if (areVectorsSimilar(this->emails, recordToCompareWith.emails))
+		return true;
+	if (areVectorsSimilar(this->addresses, recordToCompareWith.addresses))
+		return true;
+
+	return false;
+}
+
+bool VCFRecord::areVectorsSimilar
 				(
-					this->emails[i].first != recordToCompareWith.emails[i].first ||
-					this->emails[i].second != recordToCompareWith.emails[i].second
-					)
-				return false;
+					vector<pair<wstring, wstring>> vector1,
+					vector<pair<wstring, wstring>> vector2
+				)
+{
+	
+	if (vector1.size() == 0)
+		return false;
+
+	for each (pair<wstring, wstring> pair1 in vector1)
+	{
+		for each (pair<wstring, wstring> pair2 in vector2)
+		{
+			if (pair1.second == pair2.second)
+				return true;
 		}
 	}
-	if (this->addresses.size() != recordToCompareWith.addresses.size())
+	
+	return false;
+}
+
+void VCFRecord::mergeData(VCFRecord recordToAdd)
+{
+	addDataIfDontExist(this->n, recordToAdd.n);
+	addDataIfDontExist(this->fn, recordToAdd.fn);
+	addDataIfDontExist(this->bday, recordToAdd.bday);
+	addDataIfDontExist(this->note, recordToAdd.note);
+	addDataIfDontExist(this->org, recordToAdd.org);
+	addDataIfDontExist(this->title, recordToAdd.title);
+	addDataIfDontExist(this->url, recordToAdd.url);
+	addDataIfDontExist(this->addresses, recordToAdd.addresses);
+	addDataIfDontExist(this->emails, recordToAdd.emails);
+	addDataIfDontExist(this->phones, recordToAdd.phones);
+	addDataIfDontExist(this->xSkypeUsername, recordToAdd.xSkypeUsername);
+}
+
+void VCFRecord::addDataIfDontExist(std::wstring &field, std::wstring dataToAdd)
+{
+	if (field == L"" && dataToAdd != L"")
 	{
-		return false;
+		field = dataToAdd;
 	}
-	else
-	{
-		for (int i = 0; i < this->addresses.size(); i++)
-		{
-			if
+}
+
+void VCFRecord::addDataIfDontExist
 				(
-					this->addresses[i].first != recordToCompareWith.addresses[i].first ||
-					this->addresses[i].second != recordToCompareWith.addresses[i].second
-					)
-				return false;
+					vector<pair<wstring, wstring>> &vectorField, 
+					vector<pair<wstring, wstring>> vectorToAddFrom
+				)
+{
+	
+	for each(auto newField in vectorToAddFrom)
+	{
+		bool toAddNewData = true;
+		for each(auto thisField in vectorField)
+		{
+			if (newField.second == thisField.second)
+			{
+				toAddNewData = false;
+				break;
+			}
+
+		}
+		if (toAddNewData)
+		{
+			vectorField.push_back(newField);
 		}
 	}
 
-	return true;
 }

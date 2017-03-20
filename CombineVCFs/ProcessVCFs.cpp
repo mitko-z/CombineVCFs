@@ -71,18 +71,41 @@ void ProcessVCFs::processIt()
 		for (int j = 0; j < newRecords.size(); j++)
 		{
 			bool toAddNewRecord = true;
-			for each(auto record in m_vVCFRecords)
+			//for each(auto record in m_vVCFRecords)
+			for (int k = 0; k < m_vVCFRecords.size(); k++)
 			{
-				if (record == newRecords[j])
+				if (m_vVCFRecords[k] == newRecords[j])
 				{
 					toAddNewRecord = false;
 					break;	// this record is identical with another one =>
-							// no need to go through others records
+							// no need to go through the rest of the records
 				}
 				else
 				{
-					// TODO if there is a partial equality (only some fields equal)
-					// then ask user what to do - merge, use new, add both
+					if (newRecords[j].isSimilarTo(m_vVCFRecords[k]))
+					{
+						// TODO ask user what to do - merge, use new, add both
+						SimilarRecordsMenu similarRecordsMenu(m_vVCFRecords[k], newRecords[j]);
+						similarRecordsMenu.processMenu();
+						switch (similarRecordsMenu.actionTaken)
+						{
+						case SimilarRecordsMenu::actionType::add: // add both records
+							toAddNewRecord = true;
+							break;
+						case SimilarRecordsMenu::actionType::merge: // make one record from these two
+							toAddNewRecord = false;
+							m_vVCFRecords[k].mergeData(newRecords[j]);
+							break;
+						case SimilarRecordsMenu::actionType::replace: // delete old, add new
+							toAddNewRecord = true;
+							m_vVCFRecords.erase(m_vVCFRecords.begin() + k);
+							break;
+						case SimilarRecordsMenu::actionType::skip: // skip adding the new record
+							toAddNewRecord = false; 
+							break;
+						}
+						break; // similar records  found -> break for loop
+					}
 				}
 			}
 			if (toAddNewRecord)

@@ -1,15 +1,5 @@
-﻿cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
-  Main.cpp
-  ProcessVCFs.cpp
-e:\docs\programirane\combinevcfs\combinevcfs\processvcfs.cpp(31): warning C4018: '<': signed/unsigned mismatch
-e:\docs\programirane\combinevcfs\combinevcfs\processvcfs.cpp(47): warning C4018: '<': signed/unsigned mismatch
-e:\docs\programirane\combinevcfs\combinevcfs\processvcfs.cpp(68): warning C4018: '<=': signed/unsigned mismatch
-e:\docs\programirane\combinevcfs\combinevcfs\processvcfs.cpp(71): warning C4018: '<': signed/unsigned mismatch
-  StartMenu.cpp
-  VCFRecord.cpp
-e:\docs\programirane\combinevcfs\combinevcfs\vcfrecord.cpp(134): warning C4018: '<': signed/unsigned mismatch
+﻿  VCFRecord.cpp
 e:\docs\programirane\combinevcfs\combinevcfs\vcfrecord.cpp(150): warning C4018: '<': signed/unsigned mismatch
-e:\docs\programirane\combinevcfs\combinevcfs\vcfrecord.cpp(166): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
+e:\docs\programirane\combinevcfs\combinevcfs\vcfrecord.cpp(160): warning C4715: 'VCFRecord::areVectorsEqual': not all control paths return a value
   CombineVCFs.vcxproj -> E:\docs\programirane\CombineVCFs\Debug\CombineVCFs.exe
   CombineVCFs.vcxproj -> E:\docs\programirane\CombineVCFs\Debug\CombineVCFs.pdb (Full PDB)
