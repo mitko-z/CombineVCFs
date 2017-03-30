@@ -151,9 +151,12 @@
     <ClCompile Include="SimilarRecordsMenu.cpp" />
     <ClCompile Include="StartMenu.cpp" />
     <ClCompile Include="VCFRecord.cpp" />
+    <ClCompile Include="VectorPairWStringsVCFField.cpp" />
+    <ClCompile Include="WStringVCFField.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseMenu.h" />
+    <ClInclude Include="BaseVCFField.h" />
     <ClInclude Include="OutputFileMenu.h" />
     <ClInclude Include="ProcessVCFs.h" />
     <ClInclude Include="RangeMenu.h" />
@@ -161,6 +164,8 @@
     <ClInclude Include="SimilarRecordsMenu.h" />
     <ClInclude Include="StartMenu.h" />
     <ClInclude Include="VCFRecord.h" />
+    <ClInclude Include="VectorPairWStringsVCFField.h" />
+    <ClInclude Include="WStringVCFField.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

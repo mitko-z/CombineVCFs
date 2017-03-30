@@ -2,12 +2,65 @@
 
 VCFRecord::VCFRecord()
 {
+	
+	fields.push_back(new WStringVCFField(L"N", L""));
 
+	fields.push_back(new WStringVCFField(L"FN", L""));
+	
+	fields.push_back(new WStringVCFField(L"NOTE", L""));
+	
+	fields.push_back(new WStringVCFField(L"URL", L""));
+	
+	fields.push_back(new WStringVCFField(L"ORG", L""));
+	
+	fields.push_back(new WStringVCFField(L"TITLE", L""));
+	
+	fields.push_back(new WStringVCFField(L"X-SKYPE-USERNAME", L""));
+	
+	fields.push_back(new WStringVCFField(L"BDAY", L""));
+	
+	std::vector<std::pair<std::wstring, std::wstring>> aVect;
+	//VectorPairWStringsVCFField vectFields = VectorPairWStringsVCFField(L"TEL", aVect);
+	fields.push_back(new VectorPairWStringsVCFField(L"TEL", aVect));
+	//vectFields = VectorPairWStringsVCFField(L"EMAIL", aVect);
+	fields.push_back(new VectorPairWStringsVCFField(L"EMAIL", aVect));
+	//vectFields = VectorPairWStringsVCFField(L"ADR", aVect);
+	fields.push_back(new VectorPairWStringsVCFField(L"ADR", aVect));
+
+	/* wstring n;
+	wstring fn;
+	wstring note;
+	wstring url;
+	wstring org;
+	wstring title;
+	wstring xSkypeUsername;
+	wstring bday;
+	vector<pair<wstring, wstring>> phones; // the type of phone, the phone number
+	vector<pair<wstring, wstring>> emails; // type of e-mail, the e-mail
+	vector<pair<wstring, wstring>> addresses; // type of address, the address */
+}
+
+VCFRecord::~VCFRecord()
+{
+	for (int i = 0; i < this->fields.size(); i++)
+	{
+		//delete fields[i];
+	}
 }
 
 void VCFRecord::insertData(wstring fieldCriteria, wstring value, wstring type)
 {
-	if (fieldCriteria == L"N")
+	//for each (auto field in *fields)
+	for (int i = 0; i < this->fields.size(); i++)
+	{
+		if ( (*fields[i]).nameField == fieldCriteria)
+		{
+			(*fields[i]).insertData(value, type);
+			return;
+		}
+	}
+
+	/*if (fieldCriteria == L"N")
 	{
 		n = value;
 		return;
@@ -56,61 +109,63 @@ void VCFRecord::insertData(wstring fieldCriteria, wstring value, wstring type)
 	{
 		addresses.push_back(make_pair(type, value));
 		return;
-	}
+	}*/
 	return;
 }
 
 void VCFRecord::print()
 {
 
-	printField(L"Title", title);
-	//printField(L"Name", n);    // <-- this field has the same data as fn - no need to print
-	printField(L"Family Name", fn);
-	printField(L"Phone", phones);
-	printField(L"E-mail", emails);
-	printField(L"Skype", xSkypeUsername);
-	printField(L"Address", addresses);
-	printField(L"Organization", org);
-	printField(L"Note(s)", note);
-	printField(L"Website", url);
-	printField(L"Birth Day", bday);
-	
-}
-
-void VCFRecord::printField(std::wstring phrase, std::wstring field)
-{
-	if (field != L"")
-		wcout << phrase << L": " << field << endl;
-}
-
-void VCFRecord::printField(std::wstring phrase, vector<pair<wstring, int>> field)
-{
-	if (!field.empty())
+	for (int i = 0; i < this->fields.size(); i++)
 	{
-		wcout << phrase << L"(s): " << endl;
-		for each(auto record in field) // the same as for(auto record : field)
+		if ((*fields[i]).nameField != L"N")	// <-- this field has the same data as fn => no need to print
 		{
-			wcout << record.first << L" - " << to_wstring(record.second) << endl;
+			std::wcout << (*fields[i]); // TODO: make this print in separate class which prints trough different methods
 		}
 	}
+
+	//printField(L"Title", title);
+	////printField(L"Name", n);    
+	//printField(L"Family Name", fn);
+	//printField(L"Phone", phones);
+	//printField(L"E-mail", emails);
+	//printField(L"Skype", xSkypeUsername);
+	//printField(L"Address", addresses);
+	//printField(L"Organization", org);
+	//printField(L"Note(s)", note);
+	//printField(L"Website", url);
+	//printField(L"Birth Day", bday);
 }
 
-void VCFRecord::printField(std::wstring phrase, vector<pair<wstring, wstring>> field)
-{
-	if (!field.empty())
-	{
-		wcout << phrase << L"(s): " << endl;
-		for each(auto record in field) 
-		{
-			wcout << record.first << L" - " << record.second << endl;
-		}
-	}
-}
+//void VCFRecord::printField(std::wstring phrase, std::wstring field)
+//{
+//	if (field != L"")
+//		wcout << phrase << L": " << field << endl;
+//}
+//
+//void VCFRecord::printField(std::wstring phrase, vector<pair<wstring, wstring>> field)
+//{
+//	if (!field.empty())
+//	{
+//		wcout << phrase << L"(s): " << endl;
+//		for each(auto record in field) 
+//		{
+//			wcout << record.first << L" - " << record.second << endl;
+//		}
+//	}
+//}
 
 bool VCFRecord::operator==(VCFRecord recordToCompareWith)
 {
-	
-	if (this->fn != recordToCompareWith.fn)
+	for (int i = 0; i < this->fields.size(); i++)
+	{
+		if (!(*fields[i]).isEqualTo((*recordToCompareWith.fields[i]).getData()))
+		{
+			return false;
+		}
+	}
+
+	/*if (this->fn != recordToCompareWith.fn)
 		return false;
 	if (this->note != recordToCompareWith.note)
 		return false;
@@ -129,39 +184,28 @@ bool VCFRecord::operator==(VCFRecord recordToCompareWith)
 	if (!areVectorsEqual(this->emails, recordToCompareWith.emails))
 		return false;
 	if (!areVectorsEqual(this->addresses, recordToCompareWith.addresses))
-		return false;
-	
+		return false;*/
 
 	return true;
 }
 
-bool VCFRecord::areVectorsEqual
-		(
-			vector<pair<wstring, wstring>> vector1, 
-			vector<pair<wstring, wstring>> vector2
-		)
-{
-	if (vector1.size() != vector2.size())
-	{
-		return false;
-	}
-	else
-	{
-		for (int i = 0; i < vector1.size(); i++)
-		{
-			if
-				(
-					vector1[i].first != vector2[i].first ||
-					vector1[i].second != vector2[i].second
-				)
-				return false;
-		}
-	}
-}
+
 
 bool VCFRecord::isSimilarTo(VCFRecord recordToCompareWith)
 {
-	if (this->fn != L"" && this->fn == recordToCompareWith.fn)
+	for (int i = 0; i < this->fields.size(); i++)
+	{
+		if
+			(
+				(*fields[i]).getData() != L"" &&
+				(*fields[i]).isSimilarTo((*recordToCompareWith.fields[i]).getData())
+			)
+		{
+			return true;
+		}
+	}
+
+	/*if (this->fn != L"" && this->fn == recordToCompareWith.fn)
 		return true;
 	if (this->note != L"" && this->note == recordToCompareWith.note)
 		return true;
@@ -180,36 +224,20 @@ bool VCFRecord::isSimilarTo(VCFRecord recordToCompareWith)
 	if (areVectorsSimilar(this->emails, recordToCompareWith.emails))
 		return true;
 	if (areVectorsSimilar(this->addresses, recordToCompareWith.addresses))
-		return true;
+		return true;*/
 
 	return false;
 }
 
-bool VCFRecord::areVectorsSimilar
-				(
-					vector<pair<wstring, wstring>> vector1,
-					vector<pair<wstring, wstring>> vector2
-				)
-{
-	
-	if (vector1.size() == 0)
-		return false;
 
-	for each (pair<wstring, wstring> pair1 in vector1)
-	{
-		for each (pair<wstring, wstring> pair2 in vector2)
-		{
-			if (pair1.second == pair2.second)
-				return true;
-		}
-	}
-	
-	return false;
-}
 
 void VCFRecord::mergeData(VCFRecord recordToAdd)
 {
-	addDataIfDontExist(this->n, recordToAdd.n);
+	for (int i = 0; i < this->fields.size(); i++)
+	{
+		(*fields[i]).addDataIfDontExist((*recordToAdd.fields[i]).getData());
+	}
+	/*addDataIfDontExist(this->n, recordToAdd.n);
 	addDataIfDontExist(this->fn, recordToAdd.fn);
 	addDataIfDontExist(this->bday, recordToAdd.bday);
 	addDataIfDontExist(this->note, recordToAdd.note);
@@ -219,40 +247,40 @@ void VCFRecord::mergeData(VCFRecord recordToAdd)
 	addDataIfDontExist(this->addresses, recordToAdd.addresses);
 	addDataIfDontExist(this->emails, recordToAdd.emails);
 	addDataIfDontExist(this->phones, recordToAdd.phones);
-	addDataIfDontExist(this->xSkypeUsername, recordToAdd.xSkypeUsername);
+	addDataIfDontExist(this->xSkypeUsername, recordToAdd.xSkypeUsername);*/
 }
 
-void VCFRecord::addDataIfDontExist(std::wstring &field, std::wstring dataToAdd)
-{
-	if (field == L"" && dataToAdd != L"")
-	{
-		field = dataToAdd;
-	}
-}
+//void VCFRecord::addDataIfDontExist(std::wstring *field, std::wstring dataToAdd)
+//{
+//	if (field == L"" && dataToAdd != L"")
+//	{
+//		field = dataToAdd;
+//	}
+//}
 
-void VCFRecord::addDataIfDontExist
-				(
-					vector<pair<wstring, wstring>> &vectorField, 
-					vector<pair<wstring, wstring>> vectorToAddFrom
-				)
-{
-	
-	for each(auto newField in vectorToAddFrom)
-	{
-		bool toAddNewData = true;
-		for each(auto thisField in vectorField)
-		{
-			if (newField.second == thisField.second)
-			{
-				toAddNewData = false;
-				break;
-			}
-
-		}
-		if (toAddNewData)
-		{
-			vectorField.push_back(newField);
-		}
-	}
-
-}
+//void VCFRecord::addDataIfDontExist
+//				(
+//					vector<pair<wstring, wstring>> &vectorField, 
+//					vector<pair<wstring, wstring>> vectorToAddFrom
+//				)
+//{
+//	
+//	for each(auto newField in vectorToAddFrom)
+//	{
+//		bool toAddNewData = true;
+//		for each(auto thisField in vectorField)
+//		{
+//			if (newField.second == thisField.second)
+//			{
+//				toAddNewData = false;
+//				break;
+//			}
+//
+//		}
+//		if (toAddNewData)
+//		{
+//			vectorField.push_back(newField);
+//		}
+//	}
+//
+//}

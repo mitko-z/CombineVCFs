@@ -26,6 +26,12 @@ private:
 
 	std::wstring getPathToVCF(unsigned int number);
 
+	void saveToFile();
+
+	void saveFieldToFile(std::wofstream &outputFile, std::wstring fieldName, std::wstring data, std::wstring formatedData);
+
+	//void saveFieldToFile(std::wofstream &outputFile, std::wstring fieldsName, vector<pair<wstring, wstring>> fields);
+
 public:
 	ProcessVCFs
 		(
