@@ -96,6 +96,7 @@ std::wstring VectorPairWStringsVCFField::getFormatedData()
 		outputWstring += this->nameField;
 		outputWstring += L";TYPE=";
 		outputWstring += field.first;
+		outputWstring += L":";
 		outputWstring += field.second;
 		outputWstring += L"\n";
 	}

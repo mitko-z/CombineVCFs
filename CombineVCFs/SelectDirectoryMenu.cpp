@@ -59,6 +59,7 @@ std::wstring SelectDirectoryMenu::BrowseFolder(std::wstring saved_path)
 	return nullptr;
 }
 
+
 std::string SelectDirectoryMenu::getCurrentDirectory()
 {
 	return std::string(m_wsCurrentDirectory.begin(), m_wsCurrentDirectory.end());

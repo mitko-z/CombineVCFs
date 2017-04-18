@@ -5,15 +5,17 @@
 #include <shlobj.h>
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 #pragma comment(lib, "shell32.lib")
 
-class SelectDirectoryMenu
+class SelectDirectoryMenu : public BaseMenu
 {
 private:
 	std::wstring m_wsCurrentDirectory;
 
 	std::wstring BrowseFolder(std::wstring saved_path);
+
 public:
 
 	SelectDirectoryMenu();

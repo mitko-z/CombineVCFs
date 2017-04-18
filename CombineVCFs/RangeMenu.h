@@ -4,7 +4,7 @@
 #include <iostream> // user input
 #include <sstream> // user formated input management
 
-class RangeMenu : BaseMenu
+class RangeMenu : public BaseMenu
 {
 private:
 	unsigned int m_iLowerRange;

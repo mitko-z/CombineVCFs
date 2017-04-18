@@ -1,6 +1,6 @@
 #include "ProcessVCFs.h"
 
-std::vector<VCFRecord> ProcessVCFs::loadVCFFile(std::wstring pathToFile)
+std::vector<VCFRecord> ProcessVCFs::loadVCFRecordsFromFile(std::wstring pathToFile)
 {
 	std::wifstream inputFile;
 	inputFile.open(pathToFile, std::ios::in);
@@ -63,19 +63,23 @@ std::vector<VCFRecord> ProcessVCFs::loadVCFFile(std::wstring pathToFile)
 
 void ProcessVCFs::processIt()
 {
-	std::wstring pathToFile = getPathToVCF(m_uiLowerRange);
-	m_vVCFRecords = loadVCFFile(pathToFile);
+	//std::wstring pathToFile = getPathToVCF(m_uiLowerRange);
+	m_vVCFRecords = loadVCFRecordsFromFile(m_vwsInputFiles[0]);
 	
-	for (int i = m_uiLowerRange + 1; i <= m_uiUpperRange; i++)
+	for (int i = 1; i < m_vwsInputFiles.size(); i++)
 	{
-		std::vector<VCFRecord> newRecords = loadVCFFile(getPathToVCF(i));
+		std::vector<VCFRecord> newRecords = loadVCFRecordsFromFile(m_vwsInputFiles[i]);
 		for (int j = 0; j < newRecords.size(); j++)
 		{
 			bool toAddNewRecord = true;
 			//for each(auto record in m_vVCFRecords)
-			for (int k = 0; k < m_vVCFRecords.size(); k++)
+			for (int k = 0; k < m_vVCFRecords.size(); k++) 
 			{
-				if (m_vVCFRecords[k] == newRecords[j])
+				if 
+					(
+						(m_vVCFRecords[k] == newRecords[j]) || 
+						(isFoundInSimilarRecords(newRecords[j]))
+					)
 				{
 					toAddNewRecord = false;
 					break;	// this record is identical with another one =>
@@ -85,7 +89,7 @@ void ProcessVCFs::processIt()
 				{
 					if (newRecords[j].isSimilarTo(m_vVCFRecords[k]))
 					{
-						// TODO ask user what to do - merge, use new, insertData both
+						m_vVCFSimilarRecords.push_back(newRecords[j]);
 						SimilarRecordsMenu similarRecordsMenu(m_vVCFRecords[k], newRecords[j]);
 						similarRecordsMenu.processMenu();
 						switch (similarRecordsMenu.actionTaken)
@@ -99,13 +103,14 @@ void ProcessVCFs::processIt()
 							break;
 						case SimilarRecordsMenu::actionType::replace: // delete old, insertData new
 							toAddNewRecord = true;
+							m_vVCFSimilarRecords.push_back(m_vVCFRecords[k]);
 							m_vVCFRecords.erase(m_vVCFRecords.begin() + k);
 							break;
 						case SimilarRecordsMenu::actionType::skip: // skip adding the new record
 							toAddNewRecord = false; 
 							break;
 						}
-						break; // similar records  found -> break for loop
+						break; // similar records found -> break for loop
 					}
 				}
 			}
@@ -119,14 +124,14 @@ void ProcessVCFs::processIt()
 	saveToFile();
 }
 
-std::wstring ProcessVCFs::getPathToVCF(unsigned int number)
-{
-	ostringstream ss;
-	ss << setw(5) << setfill('0') << number;
-	std::string numberWithZeros = ss.str();
-	std::wstring wNumberWithZeros(numberWithZeros.begin(), numberWithZeros.end());
-	return m_sInputDirectory + L"\\" + wNumberWithZeros + L".vcf";
-}
+//std::wstring ProcessVCFs::getPathToVCF(unsigned int number)
+//{
+//	ostringstream ss;
+//	ss << setw(5) << setfill('0') << number;
+//	std::string numberWithZeros = ss.str();
+//	std::wstring wNumberWithZeros(numberWithZeros.begin(), numberWithZeros.end());
+//	return m_sInputDirectory + L"\\" + wNumberWithZeros + L".vcf";
+//}
 
 void ProcessVCFs::saveToFile()
 {
@@ -134,7 +139,7 @@ void ProcessVCFs::saveToFile()
 
 	if (!outputFile)
 	{
-		wcerr << L"Could not write to " << m_sOutputFile << endl;
+		std::wcerr << L"Could not write to " << m_sOutputFile << std::endl;
 		exit(1);
 	}
 
@@ -177,6 +182,18 @@ void ProcessVCFs::saveFieldToFile(std::wofstream &outputFile, std::wstring field
 	{
 		outputFile << formatedData;
 	}
+}
+
+bool ProcessVCFs::isFoundInSimilarRecords(VCFRecord recordToCheck)
+{
+	for each (VCFRecord similarRecord in m_vVCFSimilarRecords)
+	{
+		if (recordToCheck == similarRecord)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 //void ProcessVCFs::saveFieldToFile(std::wofstream &outputFile, std::wstring fieldsName, vector<pair<wstring, wstring>> fields)

@@ -5,7 +5,7 @@
 #include <Windows.h>
 #include <iostream>  //debug info
 
-class OutputFileMenu : BaseMenu
+class OutputFileMenu : public BaseMenu
 {
 public:
 	OutputFileMenu() :m_wsFileName(L"C:\\CombinedVCFs.txt") {}

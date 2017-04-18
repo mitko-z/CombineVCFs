@@ -1,4 +1,3 @@
-- Make save data to output file available
 - Make load data from previously saved file available
 - Make save settings to file and load them at program start
 - Remove the "Select Directory" and "Select Range" menus and make one single menu where user should all the files he/she wants to be processed

@@ -29,8 +29,8 @@ void BaseMenu::pressAnyKey()
 /// for the purpose of choice selection in a menu. The method 
 /// assumes that the value for exit is 0 and returns it if
 /// the user input is not in the range between 0
-/// and upperRange (if this parameter is set)
-int BaseMenu::getChoice(int upperRange=0)
+/// and upperRange
+int BaseMenu::getChoice(int upperRange)
 {
 	std::string choiceAsString;
 	std::getline(std::cin, choiceAsString);
