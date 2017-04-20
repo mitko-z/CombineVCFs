@@ -1,2 +1,4 @@
-﻿  CombineVCFs.vcxproj -> E:\docs\programirane\CombineVCFs\Debug\CombineVCFs.exe
+﻿  StartMenu.cpp
+e:\docs\programirane\combinevcfs\combinevcfs\startmenu.cpp(77): warning C4018: '<': signed/unsigned mismatch
+  CombineVCFs.vcxproj -> E:\docs\programirane\CombineVCFs\Debug\CombineVCFs.exe
   CombineVCFs.vcxproj -> E:\docs\programirane\CombineVCFs\Debug\CombineVCFs.pdb (Full PDB)

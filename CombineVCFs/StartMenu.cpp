@@ -47,13 +47,66 @@ void StartMenu::processMenu()
 						openFilesMenu.getFiles(),
 						outputFileMenu.wGetCurrentFileName()
 					);
-				processVCFs.processIt();
+				processVCFs.processIt(&m_vVCFRecords, &m_vVCFSimilarRecords);
+				saveToFile(outputFileMenu.wGetCurrentFileName());
+				std::wcout << L"The files" << openFilesMenu.getFilesAsWstring() << L" were successfully processed." << std::endl;
 				openFilesMenu.eraseFiles();
-				std::cout << "Select new files to process (choice 1) if you need to!" << std::endl;
 				pressAnyKey();
 			}
 			break;
 		}
 	}
 	while (choice != 0);
+}
+
+
+void StartMenu::saveToFile(std::wstring outputFileName)
+{
+	std::wofstream outputFile(outputFileName);
+
+	if (!outputFile)
+	{
+		std::wcerr << L"Could not write to " << outputFileName << std::endl;
+		exit(1);
+	}
+
+	for each (VCFRecord record in m_vVCFRecords)
+	{
+		outputFile << L"BEGIN:VCARD" << std::endl;
+		outputFile << L"VERSION:3.0" << std::endl;
+		for (int i = 0; i < record.fields.size(); i++)
+		{
+			saveFieldToFile
+			(
+				outputFile,
+				(*record.fields[i]).nameField,
+				(*record.fields[i]).getData(),
+				(*record.fields[i]).getFormatedData()
+			);
+		}
+
+		/*outputFile << L"N:" << record.n << std::endl;
+		outputFile << L"FN:" << record.fn << std::endl;
+		saveFieldToFile(outputFile, L"BDAY", record.bday);
+		saveFieldToFile(outputFile, L"NOTE", record.note);
+		saveFieldToFile(outputFile, L"ORG", record.org);
+		saveFieldToFile(outputFile, L"TITLE", record.title);
+		saveFieldToFile(outputFile, L"URL", record.url);
+		saveFieldToFile(outputFile, L"X-SKYPE-USERNAME", record.xSkypeUsername);
+		saveFieldToFile(outputFile, L"ADR", record.addresses);
+		saveFieldToFile(outputFile, L"EMAIL", record.emails);
+		saveFieldToFile(outputFile, L"TEL", record.phones);*/
+		outputFile << L"END:VCARD" << std::endl;
+	}
+
+	std::wcout << L"Records successfully saved to " << outputFileName << L"." << std::endl;
+
+}
+
+void StartMenu::saveFieldToFile(std::wofstream &outputFile, std::wstring fieldName, std::wstring data, std::wstring formatedData)
+{
+	if ((fieldName == L"N" || fieldName == L"FN") || data != L"")
+	{
+		outputFile << formatedData;
+	}
 }

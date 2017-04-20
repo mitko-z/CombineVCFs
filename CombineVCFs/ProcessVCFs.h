@@ -18,19 +18,17 @@ private:
 	unsigned int m_uiUpperRange;*/
 	std::vector<std::wstring> m_vwsInputFiles;
 	std::wstring m_sOutputFile;
-	std::vector<VCFRecord> m_vVCFRecords;
-	std::vector<VCFRecord> m_vVCFSimilarRecords;
+	/*std::vector<VCFRecord> m_vVCFRecords;
+	std::vector<VCFRecord> m_vVCFSimilarRecords;*/
 	
 
 	ProcessVCFs() {} // no default constructor allowed
 
 	std::vector<VCFRecord> loadVCFRecordsFromFile(std::wstring pathToFile);
 
-	void saveToFile();
+	
 
-	void saveFieldToFile(std::wofstream &outputFile, std::wstring fieldName, std::wstring data, std::wstring formatedData);
-
-	bool isFoundInSimilarRecords(VCFRecord recordToCheck);
+	bool isFoundInSimilarRecords(VCFRecord recordToCheck, std::vector<VCFRecord> similarVCFRecords);
 
 	//std::wstring getPathToVCF(unsigned int number);
 	//void saveFieldToFile(std::wofstream &outputFile, std::wstring fieldsName, vector<pair<wstring, wstring>> fields);
@@ -51,6 +49,6 @@ public:
 		m_sOutputFile(outputFile)
 	{}
 
-	void processIt();
+	void processIt(std::vector<VCFRecord> *VCFRecords, std::vector<VCFRecord> *similarVCFRecords);
 
 };

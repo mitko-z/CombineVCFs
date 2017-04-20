@@ -61,10 +61,10 @@ std::vector<VCFRecord> ProcessVCFs::loadVCFRecordsFromFile(std::wstring pathToFi
 	return records;
 }
 
-void ProcessVCFs::processIt()
+void ProcessVCFs::processIt(std::vector<VCFRecord> *VCFRecords, std::vector<VCFRecord> *similarVCFRecords)
 {
 	//std::wstring pathToFile = getPathToVCF(m_uiLowerRange);
-	m_vVCFRecords = loadVCFRecordsFromFile(m_vwsInputFiles[0]);
+	*VCFRecords = loadVCFRecordsFromFile(m_vwsInputFiles[0]);
 	
 	for (int i = 1; i < m_vwsInputFiles.size(); i++)
 	{
@@ -73,12 +73,12 @@ void ProcessVCFs::processIt()
 		{
 			bool toAddNewRecord = true;
 			//for each(auto record in m_vVCFRecords)
-			for (int k = 0; k < m_vVCFRecords.size(); k++) 
+			for (int k = 0; k < VCFRecords->size(); k++)
 			{
 				if 
 					(
-						(m_vVCFRecords[k] == newRecords[j]) || 
-						(isFoundInSimilarRecords(newRecords[j]))
+						(VCFRecords->at(k) == newRecords[j]) ||
+						(isFoundInSimilarRecords(newRecords[j], *similarVCFRecords))
 					)
 				{
 					toAddNewRecord = false;
@@ -87,10 +87,10 @@ void ProcessVCFs::processIt()
 				}
 				else
 				{
-					if (newRecords[j].isSimilarTo(m_vVCFRecords[k]))
+					if (newRecords[j].isSimilarTo(VCFRecords->at(k)))
 					{
-						m_vVCFSimilarRecords.push_back(newRecords[j]);
-						SimilarRecordsMenu similarRecordsMenu(m_vVCFRecords[k], newRecords[j]);
+						similarVCFRecords->push_back(newRecords[j]);
+						SimilarRecordsMenu similarRecordsMenu(VCFRecords->at(k), newRecords[j]);
 						similarRecordsMenu.processMenu();
 						switch (similarRecordsMenu.actionTaken)
 						{
@@ -99,29 +99,29 @@ void ProcessVCFs::processIt()
 							break;
 						case SimilarRecordsMenu::actionType::merge: // make one record from these two
 							toAddNewRecord = false;
-							m_vVCFRecords[k].mergeData(newRecords[j]);
+							VCFRecords->at(k).mergeData(newRecords[j]);
 							break;
 						case SimilarRecordsMenu::actionType::replace: // delete old, insertData new
 							toAddNewRecord = true;
-							m_vVCFSimilarRecords.push_back(m_vVCFRecords[k]);
-							m_vVCFRecords.erase(m_vVCFRecords.begin() + k);
+							similarVCFRecords->push_back(VCFRecords->at(k));
+							VCFRecords->erase(VCFRecords->begin() + k);
 							break;
 						case SimilarRecordsMenu::actionType::skip: // skip adding the new record
 							toAddNewRecord = false; 
 							break;
 						}
-						break; // similar records found -> break for loop
+						break; // similar records found => break for loop
 					}
 				}
 			}
 			if (toAddNewRecord)
 			{
-				m_vVCFRecords.push_back(newRecords[j]);
+				VCFRecords->push_back(newRecords[j]);
 			}
 		}
 	}
 	
-	saveToFile();
+	
 }
 
 //std::wstring ProcessVCFs::getPathToVCF(unsigned int number)
@@ -133,60 +133,11 @@ void ProcessVCFs::processIt()
 //	return m_sInputDirectory + L"\\" + wNumberWithZeros + L".vcf";
 //}
 
-void ProcessVCFs::saveToFile()
+
+
+bool ProcessVCFs::isFoundInSimilarRecords(VCFRecord recordToCheck, std::vector<VCFRecord> similarVCFRecords)
 {
-	std::wofstream outputFile(m_sOutputFile);
-
-	if (!outputFile)
-	{
-		std::wcerr << L"Could not write to " << m_sOutputFile << std::endl;
-		exit(1);
-	}
-
-	for each (VCFRecord record in m_vVCFRecords)
-	{
-		outputFile << L"BEGIN:VCARD" << std::endl;
-		outputFile << L"VERSION:3.0" << std::endl;
-		for (int i = 0; i < record.fields.size(); i++)
-		{
-			saveFieldToFile
-				(
-					outputFile, 
-					(*record.fields[i]).nameField, 
-					(*record.fields[i]).getData(),
-					(*record.fields[i]).getFormatedData()
-				);
-		}
-
-		/*outputFile << L"N:" << record.n << std::endl;
-		outputFile << L"FN:" << record.fn << std::endl;
-		saveFieldToFile(outputFile, L"BDAY", record.bday);
-		saveFieldToFile(outputFile, L"NOTE", record.note);
-		saveFieldToFile(outputFile, L"ORG", record.org);
-		saveFieldToFile(outputFile, L"TITLE", record.title);
-		saveFieldToFile(outputFile, L"URL", record.url);
-		saveFieldToFile(outputFile, L"X-SKYPE-USERNAME", record.xSkypeUsername);
-		saveFieldToFile(outputFile, L"ADR", record.addresses);
-		saveFieldToFile(outputFile, L"EMAIL", record.emails);
-		saveFieldToFile(outputFile, L"TEL", record.phones);*/
-		outputFile << L"END:VCARD" << std::endl;
-	}
-
-	std::wcout << L"Records successfully saved to " << m_sOutputFile << L"." << std::endl;
-
-}
-
-void ProcessVCFs::saveFieldToFile(std::wofstream &outputFile, std::wstring fieldName, std::wstring data, std::wstring formatedData)
-{
-	if((fieldName == L"N" || fieldName==L"FN") || data != L"")
-	{
-		outputFile << formatedData;
-	}
-}
-
-bool ProcessVCFs::isFoundInSimilarRecords(VCFRecord recordToCheck)
-{
-	for each (VCFRecord similarRecord in m_vVCFSimilarRecords)
+	for each (VCFRecord similarRecord in similarVCFRecords)
 	{
 		if (recordToCheck == similarRecord)
 		{
