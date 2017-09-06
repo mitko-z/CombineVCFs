@@ -23,7 +23,38 @@ std::wstring OutputFileMenu::saveFileDialog()
 
 void OutputFileMenu::processMenu()
 {
-	m_wsFileName = saveFileDialog();
+	int choice = 0;
+
+	do
+	{
+		m_sMenuText =
+			"Enter your choice :" + NEW_LINE +
+			"(1) to select output file (current file is " + getCurrentFileName() + ")" + NEW_LINE +
+			"(2) Autoload file at program start (current state " + (autoLoadFile ? "Yes" : "No") + ")" + NEW_LINE +
+			"(0 or anything else) for Back to Main menu" + NEW_LINE;
+		printText();
+		choice = getChoice(2);
+
+		switch (choice)
+		{
+		case 1:
+			m_wsFileName = saveFileDialog();
+			break;
+		case 2:
+			if (autoLoadFile == true) // switch from true to false and from false to true
+			{
+				autoLoadFile = false;
+			}
+			else
+			{
+				autoLoadFile = true;
+			}
+			break;
+		}
+
+	} while (choice != 0);
+
+	
 }
 
 std::string OutputFileMenu::getCurrentFileName()

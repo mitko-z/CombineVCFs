@@ -9,6 +9,7 @@
 
 int main()
 {
+
 	StartMenu startMenu;
 	startMenu.processMenu();
 	

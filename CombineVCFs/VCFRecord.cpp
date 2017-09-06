@@ -1,22 +1,15 @@
 #include "VCFRecord.h"
 
-VCFRecord::VCFRecord()
+VCFRecord::VCFRecord() 
 {
-	
+	// add existing types of records in a VCFRecord
 	fields.push_back(new WStringVCFField(L"N", L""));
-
 	fields.push_back(new WStringVCFField(L"FN", L""));
-	
 	fields.push_back(new WStringVCFField(L"NOTE", L""));
-	
 	fields.push_back(new WStringVCFField(L"URL", L""));
-	
 	fields.push_back(new WStringVCFField(L"ORG", L""));
-	
 	fields.push_back(new WStringVCFField(L"TITLE", L""));
-	
 	fields.push_back(new WStringVCFField(L"X-SKYPE-USERNAME", L""));
-	
 	fields.push_back(new WStringVCFField(L"BDAY", L""));
 	
 	std::vector<std::pair<std::wstring, std::wstring>> aVect;
@@ -26,6 +19,7 @@ VCFRecord::VCFRecord()
 	fields.push_back(new VectorPairWStringsVCFField(L"EMAIL", aVect));
 	//vectFields = VectorPairWStringsVCFField(L"ADR", aVect);
 	fields.push_back(new VectorPairWStringsVCFField(L"ADR", aVect));
+
 
 	/* wstring n;
 	wstring fn;
@@ -40,13 +34,13 @@ VCFRecord::VCFRecord()
 	vector<pair<wstring, wstring>> addresses; // type of address, the address */
 }
 
-VCFRecord::~VCFRecord()
-{
-	for (int i = 0; i < this->fields.size(); i++)
-	{
-		//delete fields[i];
-	}
-}
+//VCFRecord::~VCFRecord()
+//{
+//	for (int i = 0; i < this->fields.size(); i++)
+//	{
+//		//delete fields[i];
+//	}
+//}
 
 void VCFRecord::insertData(wstring fieldCriteria, wstring value, wstring type)
 {

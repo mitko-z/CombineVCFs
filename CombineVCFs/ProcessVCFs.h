@@ -17,16 +17,12 @@ private:
 	unsigned int m_uiLowerRange;
 	unsigned int m_uiUpperRange;*/
 	std::vector<std::wstring> m_vwsInputFiles;
-	std::wstring m_sOutputFile;
 	/*std::vector<VCFRecord> m_vVCFRecords;
 	std::vector<VCFRecord> m_vVCFSimilarRecords;*/
-	
 
-	ProcessVCFs() {} // no default constructor allowed
+	bool m_bLookForDublicates;
 
 	std::vector<VCFRecord> loadVCFRecordsFromFile(std::wstring pathToFile);
-
-	
 
 	bool isFoundInSimilarRecords(VCFRecord recordToCheck, std::vector<VCFRecord> similarVCFRecords);
 
@@ -34,21 +30,38 @@ private:
 	//void saveFieldToFile(std::wofstream &outputFile, std::wstring fieldsName, vector<pair<wstring, wstring>> fields);
 
 public:
-	ProcessVCFs
-		(
-			/*std::wstring inputDirectory, 
-			unsigned int lowerRange, 
-			unsigned int upperRange,*/ 
-			std::vector<std::wstring> inputFiles,
-			std::wstring outputFile
-		):
-		/*m_sInputDirectory(inputDirectory),
-		m_uiLowerRange(lowerRange),
-		m_uiUpperRange(upperRange),*/
-		m_vwsInputFiles(inputFiles),
-		m_sOutputFile(outputFile)
+	//ProcessVCFs
+	//	(
+	//		/*std::wstring inputDirectory, 
+	//		unsigned int lowerRange, 
+	//		unsigned int upperRange,*/ 
+	//		std::vector<std::wstring> inputFiles,
+	//		bool m_bLookForDublicates = true
+	//	):
+	//	/*m_sInputDirectory(inputDirectory),
+	//	m_uiLowerRange(lowerRange),
+	//	m_uiUpperRange(upperRange),*/
+	//	m_vwsInputFiles(inputFiles),
+	//	m_bLookForDublicates(m_bLookForDublicates)
+	//{}
+
+	ProcessVCFs(bool lookForDublicates = true) 
+		:m_bLookForDublicates(lookForDublicates)
 	{}
 
-	void processIt(std::vector<VCFRecord> *VCFRecords, std::vector<VCFRecord> *similarVCFRecords);
+	void processIt
+			(
+				std::vector<VCFRecord> *VCFRecords, 
+				std::vector<VCFRecord> *similarVCFRecords,
+				std::vector<std::wstring> inputFiles,
+				bool lookForDublicates = true
+			);
+	void processIt
+			(
+				std::vector<VCFRecord> *VCFRecords,
+				std::vector<VCFRecord> *similarVCFRecords,
+				std::wstring inputFile,
+				bool lookForDublicates = true
+			);
 
 };

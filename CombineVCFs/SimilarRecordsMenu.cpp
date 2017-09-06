@@ -26,4 +26,6 @@ void SimilarRecordsMenu::processMenu()
 
 	actionTaken = static_cast<actionType>(choice - 1);
 	
+	m_sMenuText = "Please wait . . .";
+	printText();
 }

@@ -33,9 +33,6 @@ public:
 	// constructor
 	VCFRecord();
 
-	// destructor
-	~VCFRecord();
-
 	// insert the value (and type if necessary) into apropriate VCFRecord's field according fieldCriteria
 	void insertData(wstring fieldCriteria, wstring value, wstring type = L"");
 

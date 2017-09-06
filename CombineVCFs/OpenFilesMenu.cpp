@@ -14,7 +14,7 @@ void OpenFilesMenu::openFilesDialog()
 	ofn.lpstrFile = szFileName;
 	ofn.nMaxFile = MAX_PATH;
 	ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_ALLOWMULTISELECT;
-	ofn.lpstrDefExt = L"txt";
+	ofn.lpstrDefExt = L"vcf";
 
 	GetOpenFileNameW(&ofn);
 

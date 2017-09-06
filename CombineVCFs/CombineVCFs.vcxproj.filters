@@ -24,12 +24,6 @@
     <ClCompile Include="StartMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SelectDirectoryMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RangeMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OutputFileMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -59,12 +53,6 @@
     <ClInclude Include="StartMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SelectDirectoryMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RangeMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OutputFileMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -87,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OpenFilesMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

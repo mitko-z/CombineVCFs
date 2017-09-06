@@ -147,8 +147,6 @@
     <ClCompile Include="OpenFilesMenu.cpp" />
     <ClCompile Include="OutputFileMenu.cpp" />
     <ClCompile Include="ProcessVCFs.cpp" />
-    <ClCompile Include="RangeMenu.cpp" />
-    <ClCompile Include="SelectDirectoryMenu.cpp" />
     <ClCompile Include="SimilarRecordsMenu.cpp" />
     <ClCompile Include="StartMenu.cpp" />
     <ClCompile Include="VCFRecord.cpp" />
@@ -161,8 +159,7 @@
     <ClInclude Include="OpenFilesMenu.h" />
     <ClInclude Include="OutputFileMenu.h" />
     <ClInclude Include="ProcessVCFs.h" />
-    <ClInclude Include="RangeMenu.h" />
-    <ClInclude Include="SelectDirectoryMenu.h" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="SimilarRecordsMenu.h" />
     <ClInclude Include="StartMenu.h" />
     <ClInclude Include="VCFRecord.h" />
