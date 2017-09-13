@@ -23,7 +23,7 @@ std::wstring OutputFileMenu::saveFileDialog()
 
 void OutputFileMenu::processMenu()
 {
-	int choice = 0;
+	/*int choice = 0;
 
 	do
 	{
@@ -37,22 +37,21 @@ void OutputFileMenu::processMenu()
 
 		switch (choice)
 		{
-		case 1:
+		case 1:*/
 			m_wsFileName = saveFileDialog();
-			break;
-		case 2:
-			if (autoLoadFile == true) // switch from true to false and from false to true
-			{
-				autoLoadFile = false;
-			}
-			else
-			{
-				autoLoadFile = true;
-			}
-			break;
-		}
-
-	} while (choice != 0);
+	//		break;
+	//	case 2:
+	//		if (autoLoadFile == true) // switch from true to false and from false to true
+	//		{
+	//			autoLoadFile = false;
+	//		}
+	//		else
+	//		{
+	//			autoLoadFile = true;
+	//		}
+	//		break;
+	//	}
+	//} while (choice != 0);
 
 	
 }

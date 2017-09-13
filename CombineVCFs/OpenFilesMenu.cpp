@@ -10,7 +10,7 @@ void OpenFilesMenu::openFilesDialog()
 
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = NULL;
-	ofn.lpstrFilter = L"VCF Files (*.vcf)\0*.vcf\0All Files (*.*)\0*.*\0";
+	ofn.lpstrFilter = L"VCF Files (*.vcf)\0*.vcf\0Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
 	ofn.lpstrFile = szFileName;
 	ofn.nMaxFile = MAX_PATH;
 	ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_ALLOWMULTISELECT;

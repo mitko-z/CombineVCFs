@@ -149,6 +149,9 @@
     <ClCompile Include="ProcessVCFs.cpp" />
     <ClCompile Include="SimilarRecordsMenu.cpp" />
     <ClCompile Include="StartMenu.cpp" />
+    <ClCompile Include="VCFReader.cpp" />
+    <ClCompile Include="VCFReader2_1.cpp" />
+    <ClCompile Include="VCFReader3_0.cpp" />
     <ClCompile Include="VCFRecord.cpp" />
     <ClCompile Include="VectorPairWStringsVCFField.cpp" />
     <ClCompile Include="WStringVCFField.cpp" />
@@ -162,6 +165,9 @@
     <ClInclude Include="Settings.h" />
     <ClInclude Include="SimilarRecordsMenu.h" />
     <ClInclude Include="StartMenu.h" />
+    <ClInclude Include="VCFReader.h" />
+    <ClInclude Include="VCFReader2_1.h" />
+    <ClInclude Include="VCFReader3_0.h" />
     <ClInclude Include="VCFRecord.h" />
     <ClInclude Include="VectorPairWStringsVCFField.h" />
     <ClInclude Include="WStringVCFField.h" />

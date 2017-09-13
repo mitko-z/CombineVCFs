@@ -15,11 +15,11 @@ void StartMenu::processMenu()
 	{
 		// s((const char*)&ws[0], sizeof(wchar_t)/sizeof(char)*ws.size());
 		// std::string openFiles (openFilesMenu.getFilesAsWstring().begin(), openFilesMenu.getFilesAsWstring().end());
-		std::wstring wOpenFiles = openFilesMenu.getFilesAsWstring();
+		std::wstring wOpenFiles(openFilesMenu.getFilesAsWstring());
 		std::string openFiles(wOpenFiles.begin(), wOpenFiles.end());
 		m_sMenuText =
 			"Enter your choice :" + NEW_LINE +
-			"(1) for Open previously processed data" + NOT_AVAIL_TEXT + NEW_LINE +
+			"(1) for Open previously processed data" + NEW_LINE +
 			"(2) for Open/Add your VCF files (currently selected files are " + openFiles + ")" + NEW_LINE +
 			"(3) for Select output path and file name " + "(current output file is " + outputFileMenu.getCurrentFileName() + ")" + NEW_LINE +
 			"(4) for Process data! " + NEW_LINE +

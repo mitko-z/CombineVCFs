@@ -1,6 +1,9 @@
 #pragma once
 #include "VCFRecord.h"
 #include "SimilarRecordsMenu.h"
+#include "VCFReader.h"
+#include "VCFReader3_0.h"
+#include "VCFReader2_1.h"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -8,7 +11,7 @@
 #include <cstdlib> // for exit()
 #include <locale> // unicode chars and strings
 //#include <iomanip> // for setw() and setfill()
-#include <sstream> // for std::ostringstream
+//#include <sstream> // for std::ostringstream
 
 class ProcessVCFs
 {

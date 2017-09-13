@@ -1,0 +1,7 @@
+- Make able to read the newer vesrion 2.1 of VCF files
+- Redesign Start Menu  to behave as a wizard menu - first ask user to load files, then process them and then ask where to save them.- Make load data from previously saved file available
+- Make save settings to file and load them at program start
+- Refactor classes in order to be more OOP:
+-- make menus to be with the composite design
+-- split ProcessVCFs class in to smaller classes
+- Make save to/load from different file formats
