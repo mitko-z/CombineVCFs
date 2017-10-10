@@ -31,22 +31,24 @@ vector<VCFRecord> VCFReader2_1::loadVCFRecordsFromFile(std::wstring pathToFile)
 					criteria += contents[i];
 				}
 				std::wstring type = L"";
+				std::wstring data = L"";
 				int lenghtOfType = 0;
-				if (contents[criteria.length()] == L';')
+				if (contents.size() > criteria.size())
 				{
-					lenghtOfType = 1; // <-- this the lenght of ";"
-					for (int i = criteria.length() + lenghtOfType; contents[i] != L':'; i++)
+					if (contents[criteria.size()] == L';')
 					{
-						type += contents[i];
+						lenghtOfType = 1; // <-- this is the lenght of ";"
+						for (int i = criteria.length() + lenghtOfType; contents[i] != L':' && i < contents.size(); i++)
+						{
+							type += contents[i];
+						}
+					}
+					//      i = criteria lenght + length of ";" + type lenght + leght of ":"
+					for (int i = criteria.length() + lenghtOfType + type.length() + 1; i < contents.size(); i++)
+					{
+						data += contents[i];
 					}
 				}
-				std::wstring data = L"";
-				//      i = criteria lenght + length of ";" + type lenght + leght of ":"
-				for (int i = criteria.length() + lenghtOfType + type.length() + 1; i < contents.length(); i++)
-				{
-					data += contents[i];
-				}
-				
 				// std::wcout << data << std::endl;
 				aRecord->insertData(criteria, data, type);
 				std::getline(inputFile, contents);
