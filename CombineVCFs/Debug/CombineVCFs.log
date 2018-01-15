@@ -1,6 +1,5 @@
-﻿  VCFReader2_1.cpp
-e:\docs\programirane\combinevcfs\combinevcfs\vcfreader2_1.cpp(29): warning C4018: '<': signed/unsigned mismatch
-e:\docs\programirane\combinevcfs\combinevcfs\vcfreader2_1.cpp(41): warning C4018: '<': signed/unsigned mismatch
-e:\docs\programirane\combinevcfs\combinevcfs\vcfreader2_1.cpp(47): warning C4018: '<': signed/unsigned mismatch
+﻿  StartMenu.cpp
+e:\docs\programirane\combinevcfs\combinevcfs\startmenu.cpp(308): warning C4018: '<': signed/unsigned mismatch
+e:\docs\programirane\combinevcfs\combinevcfs\startmenu.cpp(363): warning C4715: 'StartMenu::stripExtension': not all control paths return a value
   CombineVCFs.vcxproj -> E:\docs\programirane\CombineVCFs\Debug\CombineVCFs.exe
   CombineVCFs.vcxproj -> E:\docs\programirane\CombineVCFs\Debug\CombineVCFs.pdb (Full PDB)

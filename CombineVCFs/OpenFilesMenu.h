@@ -24,6 +24,7 @@ public:
 	std::vector<std::wstring> getFiles() { return m_vwsFiles; }
 	std::wstring getFilesAsWstring() { return m_wsFilesAsString; }
 
+
 	void eraseFiles();
 
 	void processMenu();
