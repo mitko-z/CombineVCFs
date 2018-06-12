@@ -180,8 +180,14 @@ void StartMenu::processMenu()
 			SIMILAR_RECORDS_EXT
 		);
 		saveToFile(similarRecordsFileName, m_vVCFSimilarRecords);
+		pressAnyKey();
 
-		m_sMenuText = "The files" + std::string(openFilesMenu.getFilesAsWstring().begin(), openFilesMenu.getFilesAsWstring().end()) + " were successfully processed." + NEW_LINE;
+		std::string str1 = "The file(s) ";
+		std::wstring wStr2 = openFilesMenu.getFilesAsWstring();
+		std::string str2 = std::string(wStr2.begin(), wStr2.end());
+		std::string str3 = " were successfully processed." + NEW_LINE;
+
+		m_sMenuText = str1 + str2 + str3;
 		printText();
 		openFilesMenu.eraseFiles();
 		pressAnyKey();
