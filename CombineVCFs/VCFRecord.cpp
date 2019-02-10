@@ -107,6 +107,20 @@ void VCFRecord::insertData(wstring fieldCriteria, wstring value, wstring type)
 	return;
 }
 
+std::wstring VCFRecord::wName()
+{
+	std::wstring n = L"";
+	for (auto field : this->fields)
+	{
+		if (field->nameField == L"FN")
+		{
+			n = field->getData();
+			break;
+		}
+	}
+	return n;
+}
+
 void VCFRecord::print()
 {
 

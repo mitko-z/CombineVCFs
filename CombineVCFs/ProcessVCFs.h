@@ -16,6 +16,7 @@
 class ProcessVCFs
 {
 private:
+	const int NUM_OF_CHARS_ON_A_ROW = 100;
 	/*std::wstring m_sInputDirectory;
 	unsigned int m_uiLowerRange;
 	unsigned int m_uiUpperRange;*/

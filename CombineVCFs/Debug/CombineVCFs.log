@@ -1,5 +1,5 @@
-﻿  StartMenu.cpp
-e:\docs\programirane\combinevcfs\combinevcfs\startmenu.cpp(315): warning C4018: '<': signed/unsigned mismatch
-e:\docs\programirane\combinevcfs\combinevcfs\startmenu.cpp(370): warning C4715: 'StartMenu::stripExtension': not all control paths return a value
+﻿  OutputFileMenu.cpp
+  OpenFilesMenu.cpp
+  Generating Code...
   CombineVCFs.vcxproj -> E:\docs\programirane\CombineVCFs\Debug\CombineVCFs.exe
   CombineVCFs.vcxproj -> E:\docs\programirane\CombineVCFs\Debug\CombineVCFs.pdb (Full PDB)

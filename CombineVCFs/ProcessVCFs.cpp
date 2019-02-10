@@ -112,6 +112,31 @@ void ProcessVCFs::processIt
 				//for each(auto record in m_vVCFRecords)
 				for (int k = 0; k < VCFRecords->size(); k++)
 				{
+					std::wstring infoOnRecords = 
+						L"Checking new record # " + 
+						std::to_wstring(j + 1) + 
+						L" of " + 
+						std::to_wstring(newRecords.size()) +
+						L" (" +
+						newRecords[j].wName() +
+						L") with existing record # " +
+						std::to_wstring(k + 1) +
+						L" of " +
+						std::to_wstring(VCFRecords->size()) +
+						L".";
+					if (infoOnRecords.size() > NUM_OF_CHARS_ON_A_ROW)	// if string bigger than screen num of chars for a row
+					{
+						infoOnRecords.erase(NUM_OF_CHARS_ON_A_ROW);	// erase to fit in
+					}
+					else if (infoOnRecords.size() < NUM_OF_CHARS_ON_A_ROW)	// if string lesser than screen num of chars for a row
+					{
+						int numOfSpacesToAdd = NUM_OF_CHARS_ON_A_ROW - infoOnRecords.size();	// add so many spaces to be exactly 40
+						for (int l = 0; l < numOfSpacesToAdd; ++l)
+						{
+							infoOnRecords.push_back(L' ');
+						}
+					}
+					std::wcout << infoOnRecords << "\r";
 					if
 						(
 							(VCFRecords->at(k) == newRecords[j]) ||
@@ -147,21 +172,21 @@ void ProcessVCFs::processIt
 							similarRecordsMenu.processMenu();
 							switch (similarRecordsMenu.actionTaken)
 							{
-							case SimilarRecordsMenu::actionType::add: // insertData both records
-								toAddNewRecord = true;
-								break;
-							case SimilarRecordsMenu::actionType::merge: // make one record from these two
-								toAddNewRecord = false;
-								VCFRecords->at(k).mergeData(newRecords[j]);
-								break;
-							case SimilarRecordsMenu::actionType::replace: // delete old, insertData new
-								toAddNewRecord = true;
-								similarVCFRecords->push_back(VCFRecords->at(k));
-								VCFRecords->erase(VCFRecords->begin() + k);
-								break;
-							case SimilarRecordsMenu::actionType::skip: // skip adding the new record
-								toAddNewRecord = false;
-								break;
+								case SimilarRecordsMenu::actionType::add: // insertData both records
+									toAddNewRecord = true;
+									break;
+								case SimilarRecordsMenu::actionType::merge: // make one record from these two
+									toAddNewRecord = false;
+									VCFRecords->at(k).mergeData(newRecords[j]);
+									break;
+								case SimilarRecordsMenu::actionType::replace: // delete old, insertData new
+									toAddNewRecord = true;
+									similarVCFRecords->push_back(VCFRecords->at(k));
+									VCFRecords->erase(VCFRecords->begin() + k);
+									break;
+								case SimilarRecordsMenu::actionType::skip: // skip adding the new record
+									toAddNewRecord = false;
+									break;
 							}
 							break; // similar records found => break for loop
 						}
@@ -174,7 +199,7 @@ void ProcessVCFs::processIt
 			}
 		}
 	}
-	
+	std::cout << std::endl;
 	
 }
 
@@ -204,14 +229,16 @@ void ProcessVCFs::processIt
 
 bool ProcessVCFs::isFoundInSimilarRecords(VCFRecord recordToCheck, std::vector<VCFRecord> similarVCFRecords)
 {
+	bool result = false;
 	for each (VCFRecord similarRecord in similarVCFRecords)
 	{
 		if (recordToCheck == similarRecord)
 		{
-			return true;
+			result = true;
+			break;		// similar record found => no need to look further
 		}
 	}
-	return false;
+	return result;
 }
 
 //void ProcessVCFs::saveFieldToFile(std::wofstream &outputFile, std::wstring fieldsName, vector<pair<wstring, wstring>> fields)

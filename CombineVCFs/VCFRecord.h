@@ -38,6 +38,8 @@ public:
 
 	void print();
 
+	std::wstring wName();
+
 	bool operator==(VCFRecord recordToCompareWith);
 
 	bool isSimilarTo(VCFRecord recordToCompareWith);

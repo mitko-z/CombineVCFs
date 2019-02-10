@@ -10,11 +10,11 @@ std::wstring OutputFileMenu::saveFileDialog()
 
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = NULL;
-	ofn.lpstrFilter = L"Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
+	ofn.lpstrFilter = L"VCF Files (*.vcf)\0*.vcf\0All Files (*.*)\0*.*\0";
 	ofn.lpstrFile = szFileName;
 	ofn.nMaxFile = MAX_PATH;
 	ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
-	ofn.lpstrDefExt = L"txt";
+	ofn.lpstrDefExt = L"vcf";
 
 	GetSaveFileName(&ofn);
 

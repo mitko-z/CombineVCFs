@@ -88,11 +88,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -143,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseMenu.cpp" />
+    <ClCompile Include="FileSaverAsVCF.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OpenFilesMenu.cpp" />
     <ClCompile Include="OutputFileMenu.cpp" />
@@ -159,6 +164,8 @@
   <ItemGroup>
     <ClInclude Include="BaseMenu.h" />
     <ClInclude Include="BaseVCFField.h" />
+    <ClInclude Include="FileSaver.h" />
+    <ClInclude Include="FileSaverAsVCF.h" />
     <ClInclude Include="OpenFilesMenu.h" />
     <ClInclude Include="OutputFileMenu.h" />
     <ClInclude Include="ProcessVCFs.h" />

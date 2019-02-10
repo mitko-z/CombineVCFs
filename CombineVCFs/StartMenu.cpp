@@ -139,11 +139,12 @@ void StartMenu::processMenu()
 		NEW_LINE +
 		std::to_string(m_vVCFRecords.size()) + " records were loaded previously;" + NEW_LINE +
 		"the files " + openFiles + " were selected new records to be ecstracted from;" + NEW_LINE +
-		"in " + outputFileMenu.getCurrentFileName() + " was selected the processed records to be saved in." + NEW_LINE +
+		"file " + outputFileMenu.getCurrentFileName() + " was selected the processed records to " +
+		"be saved in." + NEW_LINE +
 		NEW_LINE +
 		"Is this information correct? Select:" + NEW_LINE +
 		"(1) - to continue with proceesing" + NEW_LINE +
-		"(0 or anything else - for Exit" + NEW_LINE;
+		"(0 or anything else) - for exit" + NEW_LINE;
 	printText();
 	choice = getChoice(1);
 	if (choice == 0)
@@ -172,20 +173,25 @@ void StartMenu::processMenu()
 		);
 
 		// 5. save the records
-		saveToFile(outputFileMenu.wGetCurrentFileName(), m_vVCFRecords);
+		FileSaverAsVCF fileSaver(outputFileMenu.wGetCurrentFileName(), m_vVCFRecords);
+		fileSaver.saveToFile();
+//		saveToFile(outputFileMenu.wGetCurrentFileName(), m_vVCFRecords);
 		// save the similar records for later use with the same name but with the smr extension
 		wstring similarRecordsFileName
 		(
 			stripExtension(outputFileMenu.wGetCurrentFileName()) +
 			SIMILAR_RECORDS_EXT
 		);
-		saveToFile(similarRecordsFileName, m_vVCFSimilarRecords);
+		fileSaver.setFileName(similarRecordsFileName);
+		fileSaver.setRecords(m_vVCFSimilarRecords);
+		fileSaver.saveToFile();
+//		saveToFile(similarRecordsFileName, m_vVCFSimilarRecords);
 		pressAnyKey();
 
-		std::string str1 = "The file(s) ";
+		std::string str1 = "File(s) ";
 		std::wstring wStr2 = openFilesMenu.getFilesAsWstring();
 		std::string str2 = std::string(wStr2.begin(), wStr2.end());
-		std::string str3 = " were successfully processed." + NEW_LINE;
+		std::string str3 = " was/were successfully processed." + NEW_LINE;
 
 		m_sMenuText = str1 + str2 + str3;
 		printText();

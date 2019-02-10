@@ -6,6 +6,7 @@
 #include "OutputFileMenu.h"
 #include "ProcessVCFs.h"
 #include "VCFRecord.h"
+#include "FileSaverAsVCF.h"
 #include <vector> // vector of VCF Records
 #include <string> // operator+ overload
 
