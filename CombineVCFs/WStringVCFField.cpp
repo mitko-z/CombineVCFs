@@ -4,7 +4,7 @@ std::wostream& WStringVCFField::print(std::wostream& out) const
 {
 	if (this->data!=L"")
 	{
-		out << nameField << L"(s): " << std::endl;
+		out << getName() << L"(s): " << std::endl;
 		out << this->data << std::endl;
 	}
 	return out;

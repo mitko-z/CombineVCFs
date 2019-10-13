@@ -11,5 +11,6 @@ class VCFReader
 {
 public:
 	static VCFReader *makeVCFReader(std::wstring version); // factory method
-	virtual vector<VCFRecord> loadVCFRecordsFromFile(std::wstring pathToFile) = 0;
+	virtual vector<VCFRecord>& loadVCFRecordsFromFile(vector<VCFRecord>& records, 
+													  std::wstring pathToFile) = 0;
 };

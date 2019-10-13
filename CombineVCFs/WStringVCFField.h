@@ -19,7 +19,7 @@ public:
 
 	std::wstring getData() { return data; }
 
-	std::wstring getFormatedData() { return this->nameField + L":" + data + L"\n"; }
+	std::wstring getFormatedData() { return this->getName() + L":" + data + L"\n"; }
 
 	void addDataIfDontExist(std::wstring fieldToAddFrom);
 

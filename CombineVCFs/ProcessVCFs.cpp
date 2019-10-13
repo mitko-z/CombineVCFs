@@ -2,78 +2,82 @@
 
 std::vector<VCFRecord> ProcessVCFs::loadVCFRecordsFromFile(std::wstring pathToFile)
 {
-	std::wifstream inputFile;
-	inputFile.open(pathToFile, std::ios::in);
-	if (!inputFile.is_open())
-	{
-		std::cerr 
-			<< "Error! Unable to open this file:" 
-			<< std::string(pathToFile.begin(), pathToFile.end()) 
-			<< std::endl;
-		exit(1);
-	}
-
-	std::wstring lineFromFile;
-	//VCFRecord *aRecord;
-	//while (!inputFile.eof())
+	//std::wifstream inputFile;
+	//inputFile.open(pathToFile, std::ios::in);
+	//if (!inputFile.is_open())
 	//{
-	//	aRecord = new VCFRecord;
-	std::getline(inputFile, lineFromFile); // read 1st line = BEGIN:VCARD
-	std::getline(inputFile, lineFromFile); // read 2nd line = VERSION...
-	inputFile.close();
-	VCFReader *reader = nullptr;
-	try
-	{
-		reader = VCFReader::makeVCFReader(lineFromFile);
-	}
-	catch (const char *errorMessage)
-	{
-		std::cerr << L" ERROR: " << errorMessage << std::endl;
-		exit(1);
-	}
-	
-	std::vector<VCFRecord> records(reader->loadVCFRecordsFromFile(pathToFile));
-
-	//	std::getline(inputFile, lineFromFile); // read 1st formatedField of record
-	//	if(lineFromFile!=L"")
-	//		do
-	//		{
-	//			std::wstring criteria = L"";
-	//			for (int i = 0; lineFromFile[i] != L':' && lineFromFile[i] != L';' && i < lineFromFile.size(); i++)
-	//			{
-	//				criteria += lineFromFile[i];
-	//			}
-	//			std::wstring type = L"";
-	//			int lenghtOfType = 0;
-	//			if (lineFromFile[criteria.length()] == L';')
-	//			{
-	//				lenghtOfType = 6; // <-- this the lenght of L";TYPE="
-	//				for (int i = criteria.length() + lenghtOfType; lineFromFile[i] != L':'; i++)
-	//				{
-	//					type += lineFromFile[i];
-	//				}
-	//			}
-	//			std::wstring data = L"";
-	//			//      i = criteria lenght + length of ";TYPE=" + type lenght + leght of ":"
-	//			for (int i = criteria.length() + lenghtOfType + type.length() + 1; i < lineFromFile.length(); i++)
-	//			{
-	//				data += lineFromFile[i];
-	//			}
-	//			// std::wcout << data << std::endl;
-	//			aRecord->insertData(criteria, data, type);
-	//			std::getline(inputFile, lineFromFile);
-	//		} while (lineFromFile != L"END:VCARD");
-	//	records.push_back(*aRecord);
-	//	delete aRecord;
-	//	aRecord = nullptr;
+	//	std::cerr 
+	//		<< "Error! Unable to open this file:" 
+	//		<< std::string(pathToFile.begin(), pathToFile.end()) 
+	//		<< std::endl;
+	//	exit(1);
 	//}
+	//
+	//std::wstring lineFromFile;
+	////VCFRecord *aRecord;
+	////while (!inputFile.eof())
+	////{
+	////	aRecord = new VCFRecord;
+	//std::getline(inputFile, lineFromFile); // read 1st line = BEGIN:VCARD
+	//std::getline(inputFile, lineFromFile); // read 2nd line = VERSION...
 	//inputFile.close();
+	//VCFReader *reader = nullptr;
+	//try
+	//{
+	//	reader = VCFReader::makeVCFReader(lineFromFile);
+	//}
+	//catch (const char *errorMessage)
+	//{
+	//	std::cerr << L" ERROR: " << errorMessage << std::endl;
+	//	exit(1);
+	//}
+	//
+	//std::vector<VCFRecord> records(reader->loadVCFRecordsFromFile(pathToFile));
+	//
+	////	std::getline(inputFile, lineFromFile); // read 1st formatedField of record
+	////	if(lineFromFile!=L"")
+	////		do
+	////		{
+	////			std::wstring criteria = L"";
+	////			for (int i = 0; lineFromFile[i] != L':' && lineFromFile[i] != L';' && i < lineFromFile.size(); i++)
+	////			{
+	////				criteria += lineFromFile[i];
+	////			}
+	////			std::wstring type = L"";
+	////			int lenghtOfType = 0;
+	////			if (lineFromFile[criteria.length()] == L';')
+	////			{
+	////				lenghtOfType = 6; // <-- this the lenght of L";TYPE="
+	////				for (int i = criteria.length() + lenghtOfType; lineFromFile[i] != L':'; i++)
+	////				{
+	////					type += lineFromFile[i];
+	////				}
+	////			}
+	////			std::wstring data = L"";
+	////			//      i = criteria lenght + length of ";TYPE=" + type lenght + leght of ":"
+	////			for (int i = criteria.length() + lenghtOfType + type.length() + 1; i < lineFromFile.length(); i++)
+	////			{
+	////				data += lineFromFile[i];
+	////			}
+	////			// std::wcout << data << std::endl;
+	////			aRecord->insertData(criteria, data, type);
+	////			std::getline(inputFile, lineFromFile);
+	////		} while (lineFromFile != L"END:VCARD");
+	////	records.push_back(*aRecord);
+	////	delete aRecord;
+	////	aRecord = nullptr;
+	////}
+	////inputFile.close();
+	//
+	//if (reader)
+	//{
+	//	delete[] reader;
+	//	reader = nullptr;
+	//}
+	FileReaderFromVCFs readerFromVCFs(pathToFile);
 
-	if (reader)
-	{
-		delete[] reader;
-		reader = nullptr;
-	}
+	std::vector<VCFRecord> records;
+	records = readerFromVCFs.loadRecords(records);
 
 	return records;
 }
@@ -93,7 +97,8 @@ void ProcessVCFs::processIt
 	//std::wstring pathToFile = getPathToVCF(m_uiLowerRange);
 	if (VCFRecords->size() == 0)
 	{
-		*VCFRecords = loadVCFRecordsFromFile(m_vwsInputFiles[0]);
+		FileReaderFromVCFs readerFromVCFs(m_vwsInputFiles[0]);
+		*VCFRecords = readerFromVCFs.loadRecords(*VCFRecords);
 	}
 	else
 	{
@@ -102,7 +107,9 @@ void ProcessVCFs::processIt
 	
 	for (int i = startFromFile; i < m_vwsInputFiles.size(); i++)
 	{
-		std::vector<VCFRecord> newRecords(loadVCFRecordsFromFile(m_vwsInputFiles[i]));
+		std::vector<VCFRecord> newRecords;
+		FileReaderFromVCFs readerFromVCFs(m_vwsInputFiles[i]);
+		newRecords = readerFromVCFs.loadRecords(newRecords);
 		for (int j = 0; j < newRecords.size(); j++)
 		{
 			bool toAddNewRecord = true;
@@ -137,6 +144,20 @@ void ProcessVCFs::processIt
 						}
 					}
 					std::wcout << infoOnRecords << "\r";
+					//// debug
+					//bool equal = (VCFRecords->at(k) == newRecords[j]);
+					//bool found = isFoundInSimilarRecords(newRecords[j], *similarVCFRecords);
+					//bool similar = newRecords[j].isSimilarTo(VCFRecords->at(k));
+					//if (!equal)
+					//{
+					//	if (similar)
+					//	{
+					//		std::cout << "aaa";
+					//	}
+					//}
+
+					//bool equal1 = (VCFRecords->at(k) == newRecords[j]);
+					////
 					if
 						(
 							(VCFRecords->at(k) == newRecords[j]) ||

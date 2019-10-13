@@ -4,16 +4,16 @@
 #include <iostream> // std::wcout
 #include <vector> // std::vector
 #include <utility> // std::pair
+#include <map>
 
 
 class BaseVCFField
 {
 protected:
 	BaseVCFField(std::wstring nameField) :nameField(nameField) {}
-public:
-	std::wstring nameField;
 
-	
+public:
+	std::wstring getName() const { return nameField; }
 
 	friend std::wostream& operator<<(std::wostream &out, const BaseVCFField &b)
 	{ 
@@ -28,4 +28,7 @@ public:
 	virtual std::wstring getData() = 0;
 	virtual std::wstring getFormatedData() = 0;
 	virtual void addDataIfDontExist(std::wstring fieldToAddFrom) = 0;
+
+private:
+	std::wstring nameField;
 };

@@ -8,7 +8,7 @@
 
 #include "BaseVCFField.h"
 #include "WStringVCFField.h"
-#include "VectorPairWStringsVCFField.h"
+#include "ListOfVCFFields.h"
 
 using namespace std;
 
@@ -47,6 +47,8 @@ public:
 	void mergeData(VCFRecord recordToAdd);
 
 private:
+
+	void unifyData(wstring &fieldCriteria, wstring &value, wstring &type);
 	//void printField(BaseVCFField *field);
 
 	//void printField(std::wstring phrase, vector<pair<wstring, wstring>> field);

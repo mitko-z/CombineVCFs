@@ -3,22 +3,25 @@
 VCFRecord::VCFRecord() 
 {
 	// add existing types of records in a VCFRecord
-	fields.push_back(new WStringVCFField(L"N", L""));
+	//fields.push_back(new WStringVCFField(L"N", L""));
 	fields.push_back(new WStringVCFField(L"FN", L""));
 	fields.push_back(new WStringVCFField(L"NOTE", L""));
 	fields.push_back(new WStringVCFField(L"URL", L""));
+	fields.push_back(new WStringVCFField(L"groupedLogs1.URL", L""));
 	fields.push_back(new WStringVCFField(L"ORG", L""));
 	fields.push_back(new WStringVCFField(L"TITLE", L""));
 	fields.push_back(new WStringVCFField(L"X-SKYPE-USERNAME", L""));
+	fields.push_back(new WStringVCFField(L"X-SKYPE-USERNAME", L""));
 	fields.push_back(new WStringVCFField(L"BDAY", L""));
 	
-	std::vector<std::pair<std::wstring, std::wstring>> aVect;
-	//VectorPairWStringsVCFField vectFields = VectorPairWStringsVCFField(L"TEL", aVect);
-	fields.push_back(new VectorPairWStringsVCFField(L"TEL", aVect));
-	//vectFields = VectorPairWStringsVCFField(L"EMAIL", aVect);
-	fields.push_back(new VectorPairWStringsVCFField(L"EMAIL", aVect));
-	//vectFields = VectorPairWStringsVCFField(L"ADR", aVect);
-	fields.push_back(new VectorPairWStringsVCFField(L"ADR", aVect));
+	std::map<std::wstring, std::wstring> aMap;
+	//ListOfVCFFields vectFields = ListOfVCFFields(L"TEL", aVect);
+	fields.push_back(new ListOfVCFFields(L"TEL", aMap));
+	//vectFields = ListOfVCFFields(L"EMAIL", aVect);
+	fields.push_back(new ListOfVCFFields(L"EMAIL", aMap));
+	//vectFields = ListOfVCFFields(L"ADR", aVect);
+	fields.push_back(new ListOfVCFFields(L"ADR", aMap));
+	fields.push_back(new ListOfVCFFields(L"groupedLogs1.ADR", aMap));
 
 
 	/* wstring n;
@@ -44,10 +47,10 @@ VCFRecord::VCFRecord()
 
 void VCFRecord::insertData(wstring fieldCriteria, wstring value, wstring type)
 {
-	//for each (auto field in *fields)
+	unifyData(fieldCriteria, value, type);
 	for (int i = 0; i < this->fields.size(); i++)
 	{
-		if ( (*fields[i]).nameField == fieldCriteria)
+		if ( (*fields[i]).getName() == fieldCriteria)
 		{
 			(*fields[i]).insertData(value, type);
 			return;
@@ -107,12 +110,39 @@ void VCFRecord::insertData(wstring fieldCriteria, wstring value, wstring type)
 	return;
 }
 
+void VCFRecord::unifyData(wstring &fieldCriteria, wstring &value, wstring &type)
+{
+	if (type == L"Work") type = L"WORK";
+	if (type == L"Home") type = L"HOME";
+	if (type == L"Mobile") type = L"CELL";
+	if (fieldCriteria == L"TEL")
+	{
+		if (value.size() >= 4)
+		{
+			if (wstring(value.begin(), value.begin() + 4) == L"+359")
+			{
+				wstring newVal = L"0" + wstring(value.begin() + 5, value.end());
+				value = newVal;
+			}
+		}
+		value.erase(std::remove(value.begin(), value.end(), L'-'), value.end());
+		value.erase(std::remove(value.begin(), value.end(), L' '), value.end());
+		/*for (int i = value.size() - 1; i >= 0; --i)
+		{
+			if (value[i] == L'-')
+			{
+				value.erase(i, 1);
+			}
+		}*/
+	}
+}
+
 std::wstring VCFRecord::wName()
 {
 	std::wstring n = L"";
 	for (auto field : this->fields)
 	{
-		if (field->nameField == L"FN")
+		if (field->getName() == L"FN")
 		{
 			n = field->getData();
 			break;
@@ -126,7 +156,7 @@ void VCFRecord::print()
 
 	for (int i = 0; i < this->fields.size(); i++)
 	{
-		if ((*fields[i]).nameField != L"N")	// <-- this field has the same data as fn => no need to print
+		if ((*fields[i]).getName() != L"N")	// <-- this field has the same data as fn => no need to print
 		{
 			std::wcout << (*fields[i]); // TODO: make this print in separate class which prints trough different methods
 		}
@@ -227,11 +257,11 @@ bool VCFRecord::isSimilarTo(VCFRecord recordToCompareWith)
 		return true;
 	if (this->bday != L"" && this->bday == recordToCompareWith.bday)
 		return true;
-	if (areVectorsSimilar(this->phones, recordToCompareWith.phones))
+	if (areUMapsSimilar(this->phones, recordToCompareWith.phones))
 		return true;
-	if (areVectorsSimilar(this->emails, recordToCompareWith.emails))
+	if (areUMapsSimilar(this->emails, recordToCompareWith.emails))
 		return true;
-	if (areVectorsSimilar(this->addresses, recordToCompareWith.addresses))
+	if (areUMapsSimilar(this->addresses, recordToCompareWith.addresses))
 		return true;*/
 
 	return false;
@@ -243,6 +273,7 @@ void VCFRecord::mergeData(VCFRecord recordToAdd)
 {
 	for (int i = 0; i < this->fields.size(); i++)
 	{
+		std::wstring data = (*recordToAdd.fields[i]).getData();
 		(*fields[i]).addDataIfDontExist((*recordToAdd.fields[i]).getData());
 	}
 	/*addDataIfDontExist(this->n, recordToAdd.n);

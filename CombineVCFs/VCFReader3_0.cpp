@@ -1,6 +1,7 @@
 #include "VCFReader3_0.h"
 
-vector<VCFRecord> VCFReader3_0::loadVCFRecordsFromFile(std::wstring pathToFile)
+vector<VCFRecord>& VCFReader3_0::loadVCFRecordsFromFile(vector<VCFRecord>& records, 
+	                                                    std::wstring pathToFile)
 {
 	std::wifstream inputFile;
 	inputFile.open(pathToFile, std::ios::in);
@@ -13,7 +14,6 @@ vector<VCFRecord> VCFReader3_0::loadVCFRecordsFromFile(std::wstring pathToFile)
 
 	std::wstring contents;
 	VCFRecord *aRecord;
-	std::vector<VCFRecord> records;
 
 	while (!inputFile.eof())
 	{

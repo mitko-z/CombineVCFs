@@ -3,5 +3,6 @@
 
 class VCFReader2_1 : public VCFReader
 {
-	virtual std::vector<VCFRecord> loadVCFRecordsFromFile(std::wstring pathToFile);
+	virtual std::vector<VCFRecord>& loadVCFRecordsFromFile(vector<VCFRecord>& records, 
+		                                                   std::wstring pathToFile);
 };

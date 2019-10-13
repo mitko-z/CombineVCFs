@@ -1,9 +1,10 @@
 #pragma once
 #include "VCFRecord.h"
 #include "SimilarRecordsMenu.h"
-#include "VCFReader.h"
-#include "VCFReader3_0.h"
-#include "VCFReader2_1.h"
+//#include "VCFReader.h"
+//#include "VCFReader3_0.h"
+//#include "VCFReader2_1.h"
+#include "FileReaderFromVCFs.h"
 #include <string>
 #include <vector>
 #include <iostream>

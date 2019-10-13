@@ -75,8 +75,9 @@ void StartMenu::processMenu()
 			}
 			else
 			{
-				std::cerr << "Error opening file!" << std::endl;
 				m_sMenuText =
+					"Error opening file!" + NEW_LINE +
+					NEW_LINE +
 					"Would you like to:" + NEW_LINE +
 					"(1) Try again -- or --" + NEW_LINE +
 					"(2) Skip loading previous records and continue -- or --" + NEW_LINE +
@@ -323,7 +324,7 @@ void StartMenu::saveToFile(std::wstring outputFileName, std::vector<VCFRecord> r
 			saveFieldToFile
 			(
 				outputFile,
-				(*record.fields[i]).nameField,
+				(*record.fields[i]).getName(),
 				(*record.fields[i]).getData(),
 				(*record.fields[i]).getFormatedData()
 			);

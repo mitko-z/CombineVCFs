@@ -10,7 +10,7 @@
   <Class Name="OutputFileMenu" Collapsed="true">
     <Position X="1" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>JAAAAAAAAAAAAAAgAAAAAAAAAAAAAEAAAAAABAEAAAA=</HashCode>
+      <HashCode>JAAAAAAAAAAAAAAgAAAAAAAAAAAAAEAAAAAABgEAAAA=</HashCode>
       <FileName>OutputFileMenu.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -24,7 +24,7 @@
   <Class Name="StartMenu" Collapsed="true">
     <Position X="5.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAABAAAAAAAAABA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAQgEAAAQEABAAgAAAAAABA=</HashCode>
       <FileName>StartMenu.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -38,7 +38,7 @@
   <Class Name="BaseVCFField">
     <Position X="2" Y="3.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAQQAgAAAAAQAAAAAIAAAAAAAAAAAQAAEAAAAEAAACA=</HashCode>
+      <HashCode>AAQQAgAAAAAQAAAAAIAAAAAAAAAAAQAAEAAEAEAAACA=</HashCode>
       <FileName>BaseVCFField.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -49,18 +49,18 @@
       <FileName>WStringVCFField.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="VectorPairWStringsVCFField">
+  <Class Name="ListOfVCFFields">
     <Position X="3" Y="7.25" Width="2.25" />
     <NestedTypes>
-      <Typedef Name="VectorPairWStringsVCFField::VectPairWstrings" Collapsed="true">
+      <Typedef Name="ListOfVCFFields::UMapWstrings" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>VectorPairWStringsVCFField.h</NewMemberFileName>
+          <NewMemberFileName>ListOfVCFFields.h</NewMemberFileName>
         </TypeIdentifier>
       </Typedef>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAQQEAQAAAAQAAAAAAAAAAAgAAAAAQAAEAAAEEAAACA=</HashCode>
-      <FileName>VectorPairWStringsVCFField.h</FileName>
+      <HashCode>AAQQEAAAAAAYAAAAAAAAAAAAAAACAQAAEAAAAEAAAGA=</HashCode>
+      <FileName>ListOfVCFFields.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimilarRecordsMenu" Collapsed="true">
@@ -73,14 +73,14 @@
   <Class Name="ProcessVCFs">
     <Position X="5.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAABAAAAAAAAIAwGAAABEAAAAAAAAAAQEA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAACAAIhAAQAAAABCAAAAAAAAAAAAA=</HashCode>
       <FileName>ProcessVCFs.h</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="VCFRecord">
     <Position X="8.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AASAAAEAAAAQAAAAAAAAAQAAAAAAAAAgAAAAAEAAAAA=</HashCode>
+      <HashCode>AASAAAAIAAAQAAAAAAAAAQAAAAAgAAAgAAAAAEAAAAA=</HashCode>
       <FileName>VCFRecord.h</FileName>
     </TypeIdentifier>
   </Struct>

@@ -20,7 +20,7 @@ void FileSaverAsVCF::saveToFile()
 			saveFieldToFile
 			(
 				outputFile,
-				(*record.fields[i]).nameField,
+				(*record.fields[i]).getName(),
 				(*record.fields[i]).getData(),
 				(*record.fields[i]).getFormatedData()
 			);
