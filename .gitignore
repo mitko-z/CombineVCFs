@@ -27,3 +27,17 @@
 *.exe
 *.out
 *.app
+*.suo
+*.db
+*.vcxproj
+*.filters
+*.sbr
+*.log
+*.tlog
+*.enc
+*.idb
+*.bsc
+*.ilk
+*.vcf
+*.smr
+trying_on_data/CombinedVCFs.txt
