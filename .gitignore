@@ -41,3 +41,16 @@
 *.vcf
 *.smr
 trying_on_data/CombinedVCFs.txt
+.vs/CombineVCFs/v15/Browse.VC.opendb
+.vs/CombineVCFs/v15/ipch/AutoPCH/122bd25754643cb5/SIMILARRECORDSMENU.ipch
+.vs/CombineVCFs/v15/ipch/AutoPCH/962f99723420c1b8/LISTOFVCFFIELDS.ipch
+.vs/CombineVCFs/v15/ipch/AutoPCH/c26d9792eae89bef/VCFRECORD.ipch
+.vs/CombineVCFs/v15/ipch/AutoPCH/f76c8c97666d748a/WSTRINGVCFFIELD.ipch
+.vs/CombineVCFs/v15/ipch/AutoPCH/fa73316b0911e632/PROCESSVCFS.ipch
+CombineVCFs.VC.db
+*.sbr
+*.tlog
+*.idb
+*.bsc
+*.ilk
+*.pdb

@@ -23,13 +23,15 @@ bool ListOfVCFFields::isEqualTo
 									std::wstring ListOfWstringsAsWstring
 								)
 {
+	bool result = true;
+
 	if (ListOfWstringsAsWstring != L"")
 	{
 		UMapWstrings UMapToCompareWith = convertToUMapWstrings(ListOfWstringsAsWstring);
 
 		if (this->dataFields.size() != UMapToCompareWith.size())
 		{
-			return false;
+			result = false;
 		}
 		else
 		{
@@ -50,17 +52,20 @@ bool ListOfVCFFields::isEqualTo
 						)*/
 				if ((it1->first != it2->first) || (it1->second != it2->second))
 				{
-					return false;
+					result = false;
+					break;
 				}
 			}
 		}
 	}
 	else
 	{
-		return (this->dataFields.size() == 0); 
-		// return true if both ListOfWstringsAsWstring and the size of dataFields are empty
-		// otherwise return false as current map is not empty but ListOfWstringsAsWstring is
+		result = (this->dataFields.size() == 0); 
+		// true if both ListOfWstringsAsWstring and the size of dataFields are empty
+		// otherwise result is false as current map is not empty but ListOfWstringsAsWstring is
 	}
+
+	return result;
 }
 
 bool ListOfVCFFields::areUMapsSimilar
