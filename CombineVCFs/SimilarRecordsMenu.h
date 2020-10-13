@@ -18,7 +18,7 @@ public:
 
 	enum actionType
 	{
-		add,
+		to_continue,
 		merge,
 		replace,
 		skip,

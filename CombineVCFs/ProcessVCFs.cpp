@@ -191,25 +191,29 @@ void ProcessVCFs::processIt
 
 							SimilarRecordsMenu similarRecordsMenu(VCFRecords->at(k), newRecords[j]);
 							similarRecordsMenu.processMenu();
-							switch (similarRecordsMenu.actionTaken)
+							if (similarRecordsMenu.actionTaken != SimilarRecordsMenu::actionType::to_continue) // user stated these are diiferen records
 							{
-								case SimilarRecordsMenu::actionType::add: // insertData both records
-									toAddNewRecord = true;
-									break;
-								case SimilarRecordsMenu::actionType::merge: // make one record from these two
-									toAddNewRecord = false;
-									VCFRecords->at(k).mergeData(newRecords[j]);
-									break;
-								case SimilarRecordsMenu::actionType::replace: // delete old, insertData new
-									toAddNewRecord = true;
-									similarVCFRecords->push_back(VCFRecords->at(k));
-									VCFRecords->erase(VCFRecords->begin() + k);
-									break;
-								case SimilarRecordsMenu::actionType::skip: // skip adding the new record
-									toAddNewRecord = false;
-									break;
+								switch (similarRecordsMenu.actionTaken)
+								{
+									case SimilarRecordsMenu::actionType::merge: // make one record from these two
+										toAddNewRecord = false;
+										VCFRecords->at(k).mergeData(newRecords[j]);
+										break;
+									case SimilarRecordsMenu::actionType::replace: // delete old, insertData new
+										toAddNewRecord = true;
+										similarVCFRecords->push_back(VCFRecords->at(k));
+										VCFRecords->erase(VCFRecords->begin() + k);
+										break;
+									case SimilarRecordsMenu::actionType::skip: // skip adding the new record
+										toAddNewRecord = false;
+										break;
+								}
+								break; // similar records found => break for loop
 							}
-							break; // similar records found => break for loop
+							else
+							{
+								similarVCFRecords->pop_back();
+							}
 						}
 					}
 				}

@@ -54,3 +54,8 @@ CombineVCFs.VC.db
 *.bsc
 *.ilk
 *.pdb
+*.tlog
+*.sbr
+*.bsc
+*.ilk
+*.pdb

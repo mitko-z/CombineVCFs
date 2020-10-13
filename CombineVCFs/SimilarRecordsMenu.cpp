@@ -8,7 +8,7 @@ void SimilarRecordsMenu::processMenu()
 	
 	m_sMenuText =
 		"Those records below have similar fields. Choose what to do: " + NEW_LINE +
-		"(1) Add both records;" + NEW_LINE +
+		"(1) These are two different records, continue searching;" + NEW_LINE +
 		"(2) Merge (add data which is different)" + NEW_LINE +
 		"(3) Replace the old record with the new one" + NEW_LINE +
 		"(4) Skip the newer record" + NEW_LINE +
