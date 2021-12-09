@@ -8,6 +8,7 @@
 #include "VCFRecord.h"
 #include "FileSaverAsVCF.h"
 #include <vector> // vector of VCF Records
+#include <map>
 #include <string> // operator+ overload
 
 
@@ -19,8 +20,8 @@ private:
 	const std::string NOT_AVAIL_TEXT = "(UNDER CONSTRUCTION. Please be patient!)";
 	const std::wstring SIMILAR_RECORDS_EXT = L"smr";
 
-	std::vector<VCFRecord> m_vVCFRecords;
-	std::vector<VCFRecord> m_vVCFSimilarRecords;
+	std::map<long long, VCFRecord> m_vVCFRecords;
+	std::map<long long, VCFRecord> m_vVCFSimilarRecords;
 
 	void saveToFile(std::wstring outputFile, std::vector<VCFRecord> records);
 

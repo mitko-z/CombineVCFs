@@ -23,6 +23,7 @@ VCFRecord::VCFRecord()
 	fields.push_back(new ListOfVCFFields(L"ADR", aMap));
 	fields.push_back(new ListOfVCFFields(L"groupedLogs1.ADR", aMap));
 
+	m_hash = this->hash(this->getAllFieldsAsString()); // init the hash in case of records with no data
 
 	/* wstring n;
 	wstring fn;
@@ -53,10 +54,11 @@ void VCFRecord::insertData(wstring fieldCriteria, wstring value, wstring type)
 		if ( (*fields[i]).getName() == fieldCriteria)
 		{
 			(*fields[i]).insertData(value, type);
-			return;
+			break;
 		}
 	}
 
+	m_hash = this->hash(this->getAllFieldsAsString());
 	/*if (fieldCriteria == L"N")
 	{
 		n = value;
@@ -121,7 +123,7 @@ void VCFRecord::unifyData(wstring &fieldCriteria, wstring &value, wstring &type)
 		{
 			if (wstring(value.begin(), value.begin() + 4) == L"+359")
 			{
-				wstring newVal = L"0" + wstring(value.begin() + 5, value.end());
+				wstring newVal = L"0" + wstring(value.begin() + 4, value.end());
 				value = newVal;
 			}
 		}
@@ -135,6 +137,19 @@ void VCFRecord::unifyData(wstring &fieldCriteria, wstring &value, wstring &type)
 			}
 		}*/
 	}
+}
+
+long long VCFRecord::hash(std::wstring s)
+{
+	long long k = 7;
+	for (int i = 0; i < s.length(); i++)
+	{
+		k *= 23;
+		k += s[i];
+		k *= 13;
+		k %= 1000000009;
+	}
+	return k;
 }
 
 std::wstring VCFRecord::wName()
@@ -287,6 +302,22 @@ void VCFRecord::mergeData(VCFRecord recordToAdd)
 	addDataIfDontExist(this->emails, recordToAdd.emails);
 	addDataIfDontExist(this->phones, recordToAdd.phones);
 	addDataIfDontExist(this->xSkypeUsername, recordToAdd.xSkypeUsername);*/
+}
+
+long long VCFRecord::getHash()
+{
+	return m_hash;
+}
+
+std::wstring VCFRecord::getAllFieldsAsString()
+{
+	std::wstring allData;
+	for (const auto field : fields)
+	{
+		allData += field->getData();
+		allData += L"--";
+	}
+	return allData;
 }
 
 //void VCFRecord::addDataIfDontExist(std::wstring *field, std::wstring dataToAdd)

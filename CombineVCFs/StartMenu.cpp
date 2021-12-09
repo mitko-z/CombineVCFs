@@ -37,8 +37,8 @@ void StartMenu::processMenu()
 				ProcessVCFs processVCFs;
 				processVCFs.processIt
 				(
-					&m_vVCFRecords,
-					&m_vVCFSimilarRecords,
+					m_vVCFRecords,
+					m_vVCFSimilarRecords,
 					openFilesMenu.getFiles(),
 					false // <-- do not look for duplicates, just load the records
 				);
@@ -62,8 +62,8 @@ void StartMenu::processMenu()
 					similarRecFilesNameCheck.close();
 					processVCFs.processIt
 					(
-						&m_vVCFSimilarRecords,
-						&m_vVCFSimilarRecords,
+						m_vVCFSimilarRecords,
+						m_vVCFSimilarRecords,
 						similarRecordsFileName,
 						false
 					);
@@ -168,8 +168,8 @@ void StartMenu::processMenu()
 		ProcessVCFs processVCFs;
 		processVCFs.processIt
 		(
-			&m_vVCFRecords,
-			&m_vVCFSimilarRecords,
+			m_vVCFRecords,
+			m_vVCFSimilarRecords,
 			openFilesMenu.getFiles()
 		);
 

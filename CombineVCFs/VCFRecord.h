@@ -46,13 +46,22 @@ public:
 
 	void mergeData(VCFRecord recordToAdd);
 
+	long long getHash();
+
 private:
 
 	void unifyData(wstring &fieldCriteria, wstring &value, wstring &type);
+	
+	long long hash(std::wstring s);
+	
+	std::wstring getAllFieldsAsString();
+	
 	//void printField(BaseVCFField *field);
 
 	//void printField(std::wstring phrase, vector<pair<wstring, wstring>> field);
 
 	//void addDataIfDontExist(vector<pair<wstring, wstring>> &vectorField, vector<pair<wstring, wstring>> vectorToAddFrom);
+
+	long long m_hash;
 };
 

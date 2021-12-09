@@ -1,0 +1,4 @@
+- Make windows like application with wizard menu
+- Make the program to remember the user's choices and to suggest them at the next start of the program
+- clean uo the unused commented code
+- replace the pointers parameters with &

@@ -1,7 +1,7 @@
 #include "VCFReader3_0.h"
 
-vector<VCFRecord>& VCFReader3_0::loadVCFRecordsFromFile(vector<VCFRecord>& records, 
-	                                                    std::wstring pathToFile)
+void VCFReader3_0::loadVCFRecordsFromFile(map<long long, VCFRecord>& records,
+										  std::wstring pathToFile)
 {
 	std::wifstream inputFile;
 	inputFile.open(pathToFile, std::ios::in);
@@ -50,12 +50,11 @@ vector<VCFRecord>& VCFReader3_0::loadVCFRecordsFromFile(vector<VCFRecord>& recor
 				aRecord->insertData(criteria, data, type);
 				std::getline(inputFile, contents);
 			} while (contents != L"END:VCARD");
-
-			records.push_back(*aRecord);
+			
+			records[aRecord->getHash()] = *aRecord;
 			delete aRecord;
 			aRecord = nullptr;
 	}
 
 	inputFile.close();
-	return records;
 }

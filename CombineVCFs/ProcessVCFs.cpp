@@ -1,6 +1,6 @@
 #include "ProcessVCFs.h"
 
-std::vector<VCFRecord> ProcessVCFs::loadVCFRecordsFromFile(std::wstring pathToFile)
+std::map<long long, VCFRecord> ProcessVCFs::loadVCFRecordsFromFile(std::wstring pathToFile)
 {
 	//std::wifstream inputFile;
 	//inputFile.open(pathToFile, std::ios::in);
@@ -76,16 +76,16 @@ std::vector<VCFRecord> ProcessVCFs::loadVCFRecordsFromFile(std::wstring pathToFi
 	//}
 	FileReaderFromVCFs readerFromVCFs(pathToFile);
 
-	std::vector<VCFRecord> records;
-	records = readerFromVCFs.loadRecords(records);
+	std::map<long long, VCFRecord> records;
+	readerFromVCFs.loadRecords(records);
 
 	return records;
 }
 
 void ProcessVCFs::processIt
 			(
-				std::vector<VCFRecord> *VCFRecords,
-				std::vector<VCFRecord> *similarVCFRecords,
+				std::map<long long, VCFRecord>& VCFRecords,
+				std::map<long long, VCFRecord>& similarVCFRecords,
 				std::vector<std::wstring> inputFiles,
 				bool lookForDublicates
 			)
@@ -95,10 +95,10 @@ void ProcessVCFs::processIt
 
 	int startFromFile = 1;
 	//std::wstring pathToFile = getPathToVCF(m_uiLowerRange);
-	if (VCFRecords->size() == 0)
+	if (VCFRecords.size() == 0)
 	{
 		FileReaderFromVCFs readerFromVCFs(m_vwsInputFiles[0]);
-		*VCFRecords = readerFromVCFs.loadRecords(*VCFRecords);
+		readerFromVCFs.loadRecords(VCFRecords);
 	}
 	else
 	{
@@ -107,72 +107,74 @@ void ProcessVCFs::processIt
 	
 	for (int i = startFromFile; i < m_vwsInputFiles.size(); i++)
 	{
-		std::vector<VCFRecord> newRecords;
+		std::map<long long, VCFRecord> newRecords;
 		FileReaderFromVCFs readerFromVCFs(m_vwsInputFiles[i]);
-		newRecords = readerFromVCFs.loadRecords(newRecords);
-		for (int j = 0; j < newRecords.size(); j++)
+		readerFromVCFs.loadRecords(newRecords);
+		//for (int j = 0; j < newRecords.size(); j++)
+		int n = 0;
+		for(auto& newRecord : newRecords)
 		{
 			bool toAddNewRecord = true;
 			
 			if (m_bLookForDublicates)
 			{
-				//for each(auto record in m_vVCFRecords)
-				for (int k = 0; k < VCFRecords->size(); k++)
+				n++;
+				if (VCFRecords.count(newRecord.first) || // the new record found in the VCFRecords or
+					similarVCFRecords.count(newRecord.first)) // found in the similar records
 				{
-					std::wstring infoOnRecords = 
-						L"Checking new record # " + 
-						std::to_wstring(j + 1) + 
-						L" of " + 
-						std::to_wstring(newRecords.size()) +
-						L" (" +
-						newRecords[j].wName() +
-						L") with existing record # " +
-						std::to_wstring(k + 1) +
-						L" of " +
-						std::to_wstring(VCFRecords->size()) +
-						L".";
-					if (infoOnRecords.size() > NUM_OF_CHARS_ON_A_ROW)	// if string bigger than screen num of chars for a row
+					toAddNewRecord = false;
+				}
+				else
+				{
+					//for each(auto record in m_vVCFRecords)
+					//for (int k = 0; k < VCFRecords->size(); k++)
+					int m = 0;
+					for (auto& vcfRecord : VCFRecords)
 					{
-						infoOnRecords.erase(NUM_OF_CHARS_ON_A_ROW);	// erase to fit in
-					}
-					else if (infoOnRecords.size() < NUM_OF_CHARS_ON_A_ROW)	// if string lesser than screen num of chars for a row
-					{
-						int numOfSpacesToAdd = NUM_OF_CHARS_ON_A_ROW - infoOnRecords.size();	// add so many spaces to be exactly 40
-						for (int l = 0; l < numOfSpacesToAdd; ++l)
-						{
-							infoOnRecords.push_back(L' ');
-						}
-					}
-					std::wcout << infoOnRecords << "\r";
-					//// debug
-					//bool equal = (VCFRecords->at(k) == newRecords[j]);
-					//bool found = isFoundInSimilarRecords(newRecords[j], *similarVCFRecords);
-					//bool similar = newRecords[j].isSimilarTo(VCFRecords->at(k));
-					//if (!equal)
-					//{
-					//	if (similar)
-					//	{
-					//		std::cout << "aaa";
-					//	}
-					//}
+						m++;
+						//// debug
+						//bool equal = (VCFRecords->at(k) == newRecords[j]);
+						//bool found = isFoundInSimilarRecords(newRecords[j], *similarVCFRecords);
+						//bool similar = newRecords[j].isSimilarTo(VCFRecords->at(k));
+						//if (!equal)
+						//{
+						//	if (similar)
+						//	{
+						//		std::cout << "aaa";
+						//	}
+						//}
 
-					//bool equal1 = (VCFRecords->at(k) == newRecords[j]);
-					////
-					if
-						(
-							(VCFRecords->at(k) == newRecords[j]) ||
-							(isFoundInSimilarRecords(newRecords[j], *similarVCFRecords))
-						)
-					{
-						toAddNewRecord = false;
-						break;	// this record is identical with another one =>
-								// no need to go through the rest of the records
-					}
-					else
-					{
-						if (newRecords[j].isSimilarTo(VCFRecords->at(k)))
+						//bool equal1 = (VCFRecords->at(k) == newRecords[j]);
+						////
+						std::wstring infoOnRecords =
+							L"Checking new record # " +
+							std::to_wstring(n) +
+							L" of " +
+							std::to_wstring(newRecords.size()) +
+							L" (" +
+							newRecord.second.wName() +
+							L") with existing record # " +
+							std::to_wstring(m) +
+							L" of " +
+							std::to_wstring(VCFRecords.size()) +
+							L".";
+						if (infoOnRecords.size() > NUM_OF_CHARS_ON_A_ROW)	// if string bigger than screen num of chars for a row
 						{
-							similarVCFRecords->push_back(newRecords[j]);
+							infoOnRecords.erase(NUM_OF_CHARS_ON_A_ROW);	// erase to fit in
+						}
+						else if (infoOnRecords.size() < NUM_OF_CHARS_ON_A_ROW)	// if string lesser than screen num of chars for a row
+						{
+							int numOfSpacesToAdd = NUM_OF_CHARS_ON_A_ROW - infoOnRecords.size();	// add so many spaces to be exactly 40
+							for (int l = 0; l < numOfSpacesToAdd; ++l)
+							{
+								infoOnRecords.push_back(L' ');
+							}
+						}
+						std::wcout << infoOnRecords << "\r";
+						
+						if (newRecord.second.isSimilarTo(vcfRecord.second))
+						{
+							similarVCFRecords[newRecord.first] = newRecord.second;
 
 							////write at the field with criteria "SIMILAR" that this is simialr record
 							//for each
@@ -189,38 +191,38 @@ void ProcessVCFs::processIt
 							//	}
 							//}
 
-							SimilarRecordsMenu similarRecordsMenu(VCFRecords->at(k), newRecords[j]);
+							SimilarRecordsMenu similarRecordsMenu(vcfRecord.second, newRecord.second);
 							similarRecordsMenu.processMenu();
 							if (similarRecordsMenu.actionTaken != SimilarRecordsMenu::actionType::to_continue) // user stated these are diiferen records
 							{
 								switch (similarRecordsMenu.actionTaken)
 								{
-									case SimilarRecordsMenu::actionType::merge: // make one record from these two
-										toAddNewRecord = false;
-										VCFRecords->at(k).mergeData(newRecords[j]);
-										break;
-									case SimilarRecordsMenu::actionType::replace: // delete old, insertData new
-										toAddNewRecord = true;
-										similarVCFRecords->push_back(VCFRecords->at(k));
-										VCFRecords->erase(VCFRecords->begin() + k);
-										break;
-									case SimilarRecordsMenu::actionType::skip: // skip adding the new record
-										toAddNewRecord = false;
-										break;
+								case SimilarRecordsMenu::actionType::merge: // make one record from these two
+									toAddNewRecord = false;
+									vcfRecord.second.mergeData(newRecord.second);
+									break;
+								case SimilarRecordsMenu::actionType::replace: // delete old, insertData new
+									toAddNewRecord = true;
+									similarVCFRecords[vcfRecord.first] = vcfRecord.second;
+									VCFRecords.erase(vcfRecord.first);
+									break;
+								case SimilarRecordsMenu::actionType::skip: // skip adding the new record
+									toAddNewRecord = false;
+									break;
 								}
 								break; // similar records found => break for loop
 							}
 							else
 							{
-								similarVCFRecords->pop_back();
+								similarVCFRecords.erase(newRecord.first);
 							}
-						}
-					}
-				}
+						} // end if (newRecord.second.isSimilarTo
+					} // end for (auto& vcfRecord : *VCFRecords)
+				} // end if (VCFRecords->count(newRecord.first) || similarVCFRecords->count(newRecord.first))
 			}
 			if (toAddNewRecord)
 			{
-				VCFRecords->push_back(newRecords[j]);
+				VCFRecords[newRecord.first] = newRecord.second;
 			}
 		}
 	}
@@ -230,8 +232,8 @@ void ProcessVCFs::processIt
 
 void ProcessVCFs::processIt
 (
-	std::vector<VCFRecord> *VCFRecords,
-	std::vector<VCFRecord> *similarVCFRecords,
+	std::map<long long, VCFRecord>& VCFRecords,
+	std::map<long long, VCFRecord>& similarVCFRecords,
 	std::wstring inputFile,
 	bool lookForDublicates
 )
@@ -252,19 +254,19 @@ void ProcessVCFs::processIt
 
 
 
-bool ProcessVCFs::isFoundInSimilarRecords(VCFRecord recordToCheck, std::vector<VCFRecord> similarVCFRecords)
-{
-	bool result = false;
-	for each (VCFRecord similarRecord in similarVCFRecords)
-	{
-		if (recordToCheck == similarRecord)
-		{
-			result = true;
-			break;		// similar record found => no need to look further
-		}
-	}
-	return result;
-}
+//bool ProcessVCFs::isFoundInSimilarRecords(VCFRecord recordToCheck, std::map<long long, VCFRecord> similarVCFRecords)
+//{
+//	bool result = false;
+//	for each (VCFRecord similarRecord in similarVCFRecords)
+//	{
+//		if (recordToCheck == similarRecord)
+//		{
+//			result = true;
+//			break;		// similar record found => no need to look further
+//		}
+//	}
+//	return result;
+//}
 
 //void ProcessVCFs::saveFieldToFile(std::wofstream &outputFile, std::wstring fieldsName, vector<pair<wstring, wstring>> fields)
 //{

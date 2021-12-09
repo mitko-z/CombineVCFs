@@ -11,18 +11,18 @@ void FileSaverAsVCF::saveToFile()
 		exit(1);
 	}
 
-	for each (VCFRecord record in this->records)
+	for each (auto& record in this->records)
 	{
 		outputFile << L"BEGIN:VCARD" << std::endl;
 		outputFile << L"VERSION:3.0" << std::endl;
-		for (int i = 0; i < record.fields.size(); i++)
+		for (int i = 0; i < record.second.fields.size(); i++)
 		{
 			saveFieldToFile
 			(
 				outputFile,
-				(*record.fields[i]).getName(),
-				(*record.fields[i]).getData(),
-				(*record.fields[i]).getFormatedData()
+				(*record.second.fields[i]).getName(),
+				(*record.second.fields[i]).getData(),
+				(*record.second.fields[i]).getFormatedData()
 			);
 		}
 

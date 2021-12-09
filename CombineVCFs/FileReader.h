@@ -13,5 +13,5 @@ public:
 	FileReader(std::wstring pathToFileToReadFrom) : fileName(pathToFileToReadFrom) {}
 	void setFileName(std::wstring pathToFileToReadFrom) { this->fileName = pathToFileToReadFrom; }
 	std::vector<VCFRecord>& getCurrentRecords() { return records; }
-	virtual std::vector<VCFRecord>& loadRecords(std::vector<VCFRecord>& records) = 0;
+	virtual void loadRecords(std::map<long long, VCFRecord>& records) = 0;
 };

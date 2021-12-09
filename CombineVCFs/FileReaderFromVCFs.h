@@ -7,5 +7,5 @@ class FileReaderFromVCFs : public FileReader
 {
 public:
 	FileReaderFromVCFs(std::wstring pathToFileToReadFrom) : FileReader(pathToFileToReadFrom) {}
-	std::vector<VCFRecord>& loadRecords(std::vector<VCFRecord>& records);
+	void loadRecords(std::map<long long, VCFRecord>& records) override;
 };

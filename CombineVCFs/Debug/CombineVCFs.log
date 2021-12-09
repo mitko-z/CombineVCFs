@@ -1,2 +1,4 @@
-﻿  SimilarRecordsMenu.cpp
+﻿  StartMenu.cpp
+e:\programirane\combinevcfs\combinevcfs\startmenu.cpp(322): warning C4018: '<': signed/unsigned mismatch
+e:\programirane\combinevcfs\combinevcfs\startmenu.cpp(377): warning C4715: 'StartMenu::stripExtension': not all control paths return a value
   CombineVCFs.vcxproj -> E:\programirane\CombineVCFs\Debug\CombineVCFs.exe

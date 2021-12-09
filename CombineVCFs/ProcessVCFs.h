@@ -27,9 +27,9 @@ private:
 
 	bool m_bLookForDublicates;
 
-	std::vector<VCFRecord> loadVCFRecordsFromFile(std::wstring pathToFile);
+	std::map<long long, VCFRecord> loadVCFRecordsFromFile(std::wstring pathToFile);
 
-	bool isFoundInSimilarRecords(VCFRecord recordToCheck, std::vector<VCFRecord> similarVCFRecords);
+	//bool isFoundInSimilarRecords(VCFRecord recordToCheck, std::map<long long, VCFRecord> similarVCFRecords);
 
 	//std::wstring getPathToVCF(unsigned int number);
 	//void saveFieldToFile(std::wofstream &outputFile, std::wstring fieldsName, vector<pair<wstring, wstring>> fields);
@@ -56,15 +56,15 @@ public:
 
 	void processIt
 			(
-				std::vector<VCFRecord> *VCFRecords, 
-				std::vector<VCFRecord> *similarVCFRecords,
+				std::map<long long, VCFRecord>& VCFRecords,
+				std::map<long long, VCFRecord>& similarVCFRecords,
 				std::vector<std::wstring> inputFiles,
 				bool lookForDublicates = true
 			);
 	void processIt
 			(
-				std::vector<VCFRecord> *VCFRecords,
-				std::vector<VCFRecord> *similarVCFRecords,
+				std::map<long long, VCFRecord>& VCFRecords,
+				std::map<long long, VCFRecord>& similarVCFRecords,
 				std::wstring inputFile,
 				bool lookForDublicates = true
 			);

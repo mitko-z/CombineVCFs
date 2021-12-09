@@ -1,6 +1,6 @@
 #include "FileReaderFromVCFs.h"
 
-std::vector<VCFRecord>& FileReaderFromVCFs::loadRecords(std::vector<VCFRecord>& records)
+void FileReaderFromVCFs::loadRecords(std::map<long long, VCFRecord>& records)
 {
 
 	std::wifstream inputFile;
@@ -29,7 +29,7 @@ std::vector<VCFRecord>& FileReaderFromVCFs::loadRecords(std::vector<VCFRecord>& 
 		exit(1);
 	}
 
-	records = reader->loadVCFRecordsFromFile(records, this->fileName);
+	reader->loadVCFRecordsFromFile(records, this->fileName);
 
 	//	std::getline(inputFile, lineFromFile); // read 1st formatedField of record
 	//	if(lineFromFile!=L"")
@@ -71,6 +71,4 @@ std::vector<VCFRecord>& FileReaderFromVCFs::loadRecords(std::vector<VCFRecord>& 
 		delete[] reader;
 		reader = nullptr;
 	}
-
-	return records;
 }
